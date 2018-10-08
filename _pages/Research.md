@@ -4,8 +4,11 @@ permalink: /Research/
 layout: single
 author_profile: true
 ---
-I have been studying Black Holes from the second year of my undergradate. I have studied them from theoretical, computational aspects. I have also started working on Deep Learning recently.
- 
+I have been studying Black Holes from the second year of my undergradate. I have studied them from theoretical, computational, and observational aspects. I have also started working on Deep Learning recently.
+
+## Deep Learning in Astronomy
+* Katebi, R., Zhou, Y., Chornock, R. and Bunescu, R., 2018. Galaxy morphology prediction using capsule networks. arXiv preprint arXiv:1809.08377.([arXiv](https://arxiv.org/abs/1809.08377))
+
 ## Astronomy
 * Chornock, R., Katebi, R., Brown, J. S., Holoien, T. S., Stanek, K. Z., Kochanek, C. S., ... & Bersier, D. (2016). ASASSN-16ci: Discovery of A Type Ia Supernova in NGC 1272. The Astronomer's Telegram, 8765.
 

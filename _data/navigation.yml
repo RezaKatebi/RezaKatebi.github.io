@@ -8,6 +8,8 @@ main:
     url: /year-archive/
   - title: "Books"
     url: /books/
+  - title: "Talks"
+    url: /Talks/
   # - title: "Sample Collections"
   #   url: /collection-archive/
   # - title: "Sitemap"
