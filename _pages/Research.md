@@ -4,7 +4,7 @@ permalink: /Research/
 layout: single
 author_profile: true
 ---
-I have been studying Black Holes from the second year of my undergradate. I have studied them from theoretical, computational, and observational aspects. I have also started working on Deep Learning recently.
+I have been studying Black Holes from the second year of my undergradate. I have studied them from theoretical, computational, and observational aspects. I have also been working on Deep Learning techinques and their applications in Astronomy.
 
 ## Deep Learning in Astronomy
 * Katebi, R., Zhou, Y., Chornock, R. and Bunescu, R., 2018. Galaxy morphology prediction using capsule networks. arXiv preprint arXiv:1809.08377.([arXiv](https://arxiv.org/abs/1809.08377))
