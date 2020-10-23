@@ -20,5 +20,5 @@ Before that, I worked with SXS collaboration on simulating binary black hole mer
 * I like programing and puzzles (Chess mainly)
 * I have black belt in Teakwondo and Kyokushin Karate
     * I also practiced: Muay Thai, Wrestling, BJJ and Boxing
-    * I am curretnly practicint BJJ.
+    * I am curretnly practicing BJJ.
 * I am a solid believer of learning from books and try to read as much as I can
