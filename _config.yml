@@ -102,8 +102,8 @@ analytics:
 author:
   name             : "Reza Katebi"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Astrophyics PhD, Senior Advanced AI Engineer"
-  location         : "Athens, GA"
+  bio              : "Astrophyics PhD, Senior Machine Learning Engineer"
+  location         : "San Diego, CA"
   email            : "rkatebi.gravity@gmail.com"
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
