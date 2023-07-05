@@ -6,7 +6,9 @@ author_profile: true
 ---
 
 # Bio
-I am a Senior Advanced AI Engineer at Honeywell.  Currently, I am leading a team of scientists and software engineers on designing, deployment, and maintenance of an end-to-end pipeline to detect gas leaks and flames using Gas Cloud Imaging (GCI), physics, computer vision, and artificial intelligence. 
+Currently I am a Senior Machine Learning Engineer (Vision New Projects) at Tesla.
+
+Previously, I worked as a Senior Advanced AI Engineer at Honeywell. I lead a team of scientists and software engineers on designing, deployment, and maintenance of an end-to-end pipeline to detect gas leaks and flames using Gas Cloud Imaging (GCI), physics, computer vision, and artificial intelligence. 
 
 I got my PhD in Astrophysics from Ohio University. There, I worked on Active Galactic Nuclei (AGN) and the behaviour of the accretion disk around the Super Massive Black Holes at their center. I have also worked on utilizing machine learning in astronomy.
 Before that, I worked with SXS collaboration on simulating binary black hole mergers with extremal spins and gravitational waves emitted from them. Recently, I have also started to work on Machine Learning and Deep Learning both as side projects because I am very interested in them and also their usage in astronomy.
