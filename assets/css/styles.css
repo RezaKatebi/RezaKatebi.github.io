@@ -1,5 +1,5 @@
 /* Importing fonts for retro feel */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 
 /* Defining CSS variables for easier future edits */
@@ -20,7 +20,7 @@
 
 /* Basic styling */
 body {
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Roboto Mono', monospace;
     background-color: var(--background-color);
     color: var(--main-color);
     line-height: 1.6;
