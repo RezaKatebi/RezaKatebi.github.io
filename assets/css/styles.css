@@ -21,17 +21,17 @@ body {
     letter-spacing: 0.5px;
 }
 
-header, nav, footer {
+header, nav, footer, .blog-container {
     text-align: center;
     margin-bottom: 30px;
 }
 
 section {
-    text-align: left; /* Aligns text of the section body to the left */
+    text-align: left;
     margin-bottom: 30px;
 }
 
-header h1 {
+header h1, .blog-title {
     font-size: 2.5em;
     font-family: 'Orbitron', sans-serif, 'Arial', 'Helvetica';
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
@@ -41,22 +41,20 @@ header p {
     font-style: italic;
 }
 
-/* Retro color scheme and patterns */
-nav a, footer a {
+nav a, footer a, .blog-post h2 {
     text-decoration: none;
     color: var(--main-color);
     margin: 0 10px;
     border-bottom: 2px dotted var(--main-color);
-    transition: color 0.3s ease, border-bottom 0.3s ease; /* Smooth transitions */
+    transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
-nav a:hover, footer a:hover {
+nav a:hover, footer a:hover, .blog-post h2:hover {
     border-bottom-style: solid;
     color: var(--hover-color);
 }
 
-/* Social Links with icons */
-#links a {
+#links a, .blog-post-date {
     margin: 0 15px;
     color: #555;
 }
@@ -65,29 +63,24 @@ nav a:hover, footer a:hover {
     transition: color 0.3s ease;
 }
 
-#links a:hover i {
-    color: var(--main-color); /* Darken the icon color on hover */
+#links a:hover i, .blog-post h2:hover {
+    color: var(--main-color);
 }
 
-/* Retro footer style */
 footer {
     border-top: 3px double var(--main-color);
     padding-top: 20px;
 }
 
-/* Other retro styling enhancements */
 h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
 }
 
-/* Portrait styling - No circle around the image */
 #about-me img {
     margin-bottom: 20px;
 }
 
-
-/* Skip Link Styling */
 .skip-link {
     position: absolute;
     top: -40px;
@@ -103,7 +96,6 @@ h1, h2, h3, h4, h5, h6, p {
     top: 0;
 }
 
-/* Back to Top Link Styling */
 .to-top {
     display: inline-block;
     padding: 5px 10px;
@@ -119,7 +111,6 @@ h1, h2, h3, h4, h5, h6, p {
     background-color: var(--hover-color);
 }
 
-
 /* Blog Main Page */
 .blog-container {
     max-width: 800px;
@@ -127,32 +118,8 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 20px;
 }
 
-.blog-title {
-    font-size: 2.4em;
-    margin-bottom: 20px;
-    font-family: 'Orbitron', sans-serif, 'Arial', 'Helvetica';
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-}
-
 .blog-post {
     margin-bottom: 40px;
-}
-
-.blog-post h2 {
-    font-size: 1.8em;
-    margin-bottom: 10px;
-    border-bottom: 2px dotted var(--main-color);
-    transition: border-bottom 0.3s ease; /* Smooth transitions */
-}
-
-.blog-post h2:hover {
-    border-bottom-style: solid;
-}
-
-.blog-post-date {
-    color: grey;
-    margin-bottom: 20px;
-    font-size: 0.9em;
 }
 
 /* Individual Blog Post Page */
@@ -161,9 +128,7 @@ h1, h2, h3, h4, h5, h6, p {
     letter-spacing: 0.4px;
 }
 
-.post-content h1,
-.post-content h2,
-.post-content h3 {
+.post-content h1, .post-content h2, .post-content h3 {
     margin-top: 30px;
 }
 
