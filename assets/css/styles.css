@@ -13,7 +13,7 @@
 body {
     font-family: 'Share Tech Mono', monospace, 'Courier New', Courier;
     background-color: var(--background-color);
-    background-image: url('URL_TO_YOUR_BACKGROUND_PATTERN'); /* Add your pattern URL */
+    background-image: url('URL_TO_YOUR_BACKGROUND_PATTERN');
     color: var(--main-color);
     margin: 0;
     padding: 20px;
@@ -24,11 +24,14 @@ body {
 header, nav, footer, .blog-container {
     text-align: center;
     margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added a subtle shadow */
 }
 
-section {
+section, .blog-post {
     text-align: left;
     margin-bottom: 30px;
+    padding: 15px; /* Added padding for better spacing */
+    border-radius: 5px; /* Rounded corners */
 }
 
 header h1, .blog-title {
@@ -57,6 +60,7 @@ nav a:hover, footer a:hover, .blog-post h2:hover {
 #links a, .blog-post-date {
     margin: 0 15px;
     color: #555;
+    font-weight: bold; /* Bolded for emphasis */
 }
 
 #links i {
@@ -79,6 +83,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 #about-me img {
     margin-bottom: 20px;
+    border-radius: 50%; /* Added to make images round */
 }
 
 .skip-link {
@@ -116,10 +121,14 @@ h1, h2, h3, h4, h5, h6, p {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: var(--background-color); /* Ensuring background consistency */
 }
 
 .blog-post {
     margin-bottom: 40px;
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background to differentiate posts */
+    border-radius: 5px;
+    padding: 10px;
 }
 
 /* Individual Blog Post Page */
