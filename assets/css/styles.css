@@ -1,17 +1,19 @@
+/* Importing fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
 /* Basic styling */
 body {
-    background-color: #FCFBE3;
-    color: #333;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Share Tech Mono', monospace;
+    background: radial-gradient(circle, #1C1D28, #000); /* Dark gradient symbolizing the pull of a black hole */
+    background-image: url('assets/images/black-hole-silhouette.jpeg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed; 
+    color: #EDEDED;
     margin: 0;
     padding: 20px;
     line-height: 1.6;
-}
-
-/* Retro color scheme and patterns */
-body {
-    background-color: #EDEDED;
-    background-image: url('assets/images/pattern.png'); /* You can find or create a subtle retro pattern. */
 }
 
 header, nav, footer, section {
@@ -21,35 +23,31 @@ header, nav, footer, section {
 
 header h1 {
     font-size: 2.5em;
+    font-family: 'Orbitron', sans-serif;
 }
 
 header p {
     font-style: italic;
+    font-family: 'Orbitron', sans-serif;
 }
 
-/* Portrait styling */
-#about-me img {
-    border: 3px solid #333;
-    border-radius: 50%;
-    margin-bottom: 20px;
-}
-
-/* Link styles */
+/* Retro color scheme and patterns with a black hole touch */
 nav a, footer a {
     text-decoration: none;
-    color: #333;
+    color: #A0AEE8; /* Deep blue as an accent color */
     margin: 0 10px;
-    border-bottom: 2px dotted #333; /* Dotted underline for a retro touch */
+    border-bottom: 2px dotted #FFD700; /* Dotted underline with a golden touch */
 }
 
 nav a:hover, footer a:hover {
     border-bottom-style: solid; /* Change to solid underline on hover */
+    color: #FFD700; /* Golden yellow for hover effects */
 }
 
 /* Social Links with icons */
 #links a {
     margin: 0 15px;
-    color: #555;
+    color: #A0AEE8; /* Deep blue as an accent color */
 }
 
 #links i {
@@ -57,17 +55,24 @@ nav a:hover, footer a:hover {
 }
 
 #links a:hover i {
-    color: #333; /* Darken the icon color on hover */
+    color: #FFD700; /* Golden yellow for hover effects */
 }
 
 /* Retro footer style */
 footer {
-    border-top: 3px double #333; /* Double border line for a vintage touch */
+    border-top: 3px double #A0AEE8; /* Double border line with deep blue touch */
     padding-top: 20px;
 }
 
-/* Other retro styling enhancements */
+/* Other unified styling enhancements */
 h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
+}
+
+/* Portrait styling */
+#about-me img {
+    border: 3px solid #A0AEE8;
+    border-radius: 50%;
+    margin-bottom: 20px;
 }
