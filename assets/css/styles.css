@@ -4,92 +4,96 @@
 
 /* Defining CSS variables for easier future edits */
 :root {
-    --main-color: #333;
-    --hover-color: #666;
-    --background-color: #FFFAE3;
-    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --card-border: 1px solid #ccc;
+    --main-color: #d35400; /* Burnt orange */
+    --hover-color: #e67e22; /* Lighter shade of burnt orange */
+    --background-color: #f7dc6f; /* Retro light yellow */
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Slightly more prominent shadow */
+    --card-border: 2px dashed var(--main-color); /* Dashed border for that retro feel */
+    --border-radius: 8px; /* Slightly larger border radius for a softer look */
 }
 
-/* Basic styling */
-*, *::before, *::after {
+/* Universal Resets */
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+/* Basic styling */
 body {
-    font-family: 'Share Tech Mono', monospace, 'Courier New', Courier;
+    font-family: 'Share Tech Mono', monospace;
     background-color: var(--background-color);
     color: var(--main-color);
-    margin: 0;
-    padding: 20px;
-    line-height: 1.8;
+    line-height: 1.6;
     letter-spacing: 0.5px;
+    padding: 2% 5%;
+    background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm0-2h1v1H1V1zm2 2h1v1H3V3zm0-2h1v1H3V1z' fill='%23ffcc66' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+    /* A simple SVG grainy pattern in the background for that retro texture */
 }
 
 header, nav, footer, .blog-container {
-    text-align: center;
+    background-color: rgba(255,255,255,0.8); /* Slight white tint on boxes */
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    border-radius: var(--border-radius);
+    padding: 20px;
     margin-bottom: 30px;
-    background-color: var(--background-color);
 }
 
 section {
-    text-align: left;
+    background-color: rgba(255,255,255,0.8);
+    padding: 20px;
+    border-radius: var(--border-radius);
     margin-bottom: 30px;
-    background-color: var(--background-color);
 }
 
 header h1, .blog-title {
-    font-size: 2.5em;
+    font-size: 2.8em;
     font-family: 'Orbitron', sans-serif;
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
-header p {
-    font-style: italic;
-}
-
-nav a, footer a, .blog-post h2 {
+nav a, footer a, .blog-post h2 a {
     text-decoration: none;
     color: var(--main-color);
-    margin: 0 10px;
-    border-bottom: 2px dotted var(--main-color);
-    transition: color 0.3s ease, border-bottom 0.3s ease;
+    padding: 5px;
+    transition: background 0.3s, color 0.3s;
 }
 
-nav a:hover, footer a:hover, .blog-post h2:hover {
-    border-bottom-style: solid;
-    color: var(--hover-color);
+nav a:hover, footer a:hover, .blog-post h2 a:hover {
+    color: var(--background-color);
+    background-color: var(--main-color);
+    border-radius: var(--border-radius);
 }
 
 #links a, .blog-post-date {
     margin: 0 15px;
     color: #555;
+    font-style: italic;
 }
 
 #links i {
     transition: color 0.3s ease;
 }
 
-#links a:hover i, .blog-post h2:hover {
+#links a:hover i {
     color: var(--main-color);
 }
 
 footer {
     border-top: 3px double var(--main-color);
     padding-top: 20px;
-    background-color: var(--background-color);
-}
-
-h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-    padding: 0;
-    background-color: var(--background-color);
 }
 
 #about-me img {
-    margin-bottom: 20px;
+    display: block;
+    margin: 0 auto 20px;
+    border: var(--card-border);
     border-radius: 50%;
-    border: 2px solid var(--main-color);
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
 }
 
 .skip-link {
@@ -100,6 +104,7 @@ h1, h2, h3, h4, h5, h6, p {
     color: white;
     padding: 5px;
     z-index: 1000;
+    border-radius: var(--border-radius);
     transition: top 0.3s;
 }
 
@@ -110,10 +115,9 @@ h1, h2, h3, h4, h5, h6, p {
 .to-top {
     display: inline-block;
     padding: 5px 10px;
-    margin-left: 10px;
     background-color: var(--main-color);
     color: var(--background-color);
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
@@ -122,39 +126,25 @@ h1, h2, h3, h4, h5, h6, p {
     background-color: var(--hover-color);
 }
 
-/* Blog Main Page */
 .blog-container {
     max-width: 800px;
     margin: 0 auto;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: var(--border-radius);
     padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
 }
 
 .blog-post {
     margin-bottom: 40px;
-    padding: 20px;
-    border: var(--card-border);
-    box-shadow: var(--card-shadow);
-    transition: transform 0.3s ease;
-    background-color: var(--background-color);
 }
 
-.blog-post:hover {
-    transform: translateY(-10px);
-}
-
-/* Individual Blog Post Page */
 .post-content {
     line-height: 1.8;
     letter-spacing: 0.4px;
-    background-color: var(--background-color);
 }
 
 .post-content h1, .post-content h2, .post-content h3 {
     margin-top: 30px;
-    background-color: var(--background-color);
 }
 
 .post-content h1 {
