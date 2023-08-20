@@ -85,3 +85,36 @@ h1, h2, h3, h4, h5, h6, p {
 #about-me img {
     margin-bottom: 20px;
 }
+
+
+/* Skip Link Styling */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--main-color);
+    color: white;
+    padding: 5px;
+    z-index: 1000;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Back to Top Link Styling */
+.to-top {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: var(--main-color);
+    color: var(--background-color);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.to-top:hover {
+    background-color: var(--hover-color);
+}
