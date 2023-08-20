@@ -1,13 +1,13 @@
-/* Importing fonts for retro feel */
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+/* Importing fonts for retro feel with futuristic touch */
+@import url('https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap'); /* For headings */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap'); /* For body text */
 
 /* Defining CSS variables for easier future edits */
 :root {
-    --main-color: #d35400; /* Retro burnt orange */
-    --hover-color: #e67e22; /* Lighter shade of burnt orange */
+    --main-color: #b0c4de; /* Light steel blue for a metallic look */
+    --hover-color: #808080; /* Gray for hover effects */
     --background-color: #FFFAE3;
-    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     --border-radius: 8px;
 }
 
@@ -29,7 +29,7 @@ body {
 }
 
 header, nav, footer, .blog-container, section {
-    background-color: var(--background-color); /* Consistent background color */
+    background-color: var(--background-color);
     box-shadow: var(--card-shadow);
     border-radius: var(--border-radius);
     padding: 20px;
@@ -38,7 +38,7 @@ header, nav, footer, .blog-container, section {
 
 header h1, .blog-title {
     font-size: 2.5em;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Saira Stencil One', sans-serif;
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
 }
@@ -52,7 +52,7 @@ nav a, footer a, .blog-post h2 a {
 
 nav a:hover, footer a:hover, .blog-post h2 a:hover {
     color: var(--background-color);
-    background-color: var(--main-color);
+    background-color: var(--hover-color);
     border-radius: var(--border-radius);
 }
 
