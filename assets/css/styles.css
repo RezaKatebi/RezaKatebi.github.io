@@ -2,24 +2,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
+/* Defining CSS variables for easier future edits */
+:root {
+    --main-color: #333;
+    --hover-color: #666;
+    --background-color: #FFFAE3;
+}
+
 /* Basic styling */
 body {
-    font-family: 'Share Tech Mono', monospace;
-    background-color: #FFFAE3; /* Yellowish background */
-    color: #333;
+    font-family: 'Share Tech Mono', monospace, 'Courier New', Courier;
+    background-color: var(--background-color);
+    background-image: url('URL_TO_YOUR_BACKGROUND_PATTERN'); /* Add your pattern URL */
+    color: var(--main-color);
     margin: 0;
     padding: 20px;
     line-height: 1.6;
+    letter-spacing: 0.5px;
 }
 
-header, nav, footer, section {
+header, nav, footer {
     text-align: center;
+    margin-bottom: 30px;
+}
+
+section {
+    text-align: left; /* Aligns text of the section body to the left */
     margin-bottom: 30px;
 }
 
 header h1 {
     font-size: 2.5em;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Orbitron', sans-serif, 'Arial', 'Helvetica';
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 header p {
@@ -29,14 +44,15 @@ header p {
 /* Retro color scheme and patterns */
 nav a, footer a {
     text-decoration: none;
-    color: #333;
+    color: var(--main-color);
     margin: 0 10px;
-    border-bottom: 2px dotted #333; /* Dotted underline for a retro touch */
+    border-bottom: 2px dotted var(--main-color);
+    transition: color 0.3s ease, border-bottom 0.3s ease; /* Smooth transitions */
 }
 
 nav a:hover, footer a:hover {
-    border-bottom-style: solid; /* Change to solid underline on hover */
-    color: #666; /* Slightly lighter on hover */
+    border-bottom-style: solid;
+    color: var(--hover-color);
 }
 
 /* Social Links with icons */
@@ -50,12 +66,12 @@ nav a:hover, footer a:hover {
 }
 
 #links a:hover i {
-    color: #333; /* Darken the icon color on hover */
+    color: var(--main-color); /* Darken the icon color on hover */
 }
 
 /* Retro footer style */
 footer {
-    border-top: 3px double #333; /* Double border line for a vintage touch */
+    border-top: 3px double var(--main-color);
     padding-top: 20px;
 }
 
