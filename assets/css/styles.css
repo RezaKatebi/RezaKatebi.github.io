@@ -6,9 +6,9 @@
 :root {
     --main-color: #d35400; /* Retro burnt orange */
     --hover-color: #e67e22; /* Lighter shade of burnt orange */
-    --background-color: #FFFAE3; 
+    --background-color: #FFFAE3;
     --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    --border-radius: 8px; 
+    --border-radius: 8px;
 }
 
 /* Universal Resets */
