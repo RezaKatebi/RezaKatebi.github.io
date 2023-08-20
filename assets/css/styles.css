@@ -1,0 +1,21 @@
+/* Retro color scheme */
+body {
+    background-color: #FCFBE3;
+    color: #333;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+header, nav, footer {
+    text-align: center;
+    margin: 20px 0;
+}
+
+nav a, footer a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 10px;
+}
+
+nav a:hover, footer a:hover {
+    text-decoration: underline;
+}
