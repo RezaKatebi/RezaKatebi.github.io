@@ -1,21 +1,73 @@
-/* Retro color scheme */
+/* Basic styling */
 body {
     background-color: #FCFBE3;
     color: #333;
     font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
 }
 
-header, nav, footer {
+/* Retro color scheme and patterns */
+body {
+    background-color: #EDEDED;
+    background-image: url('assets/images/pattern.png'); /* You can find or create a subtle retro pattern. */
+}
+
+header, nav, footer, section {
     text-align: center;
-    margin: 20px 0;
+    margin-bottom: 30px;
 }
 
+header h1 {
+    font-size: 2.5em;
+}
+
+header p {
+    font-style: italic;
+}
+
+/* Portrait styling */
+#about-me img {
+    border: 3px solid #333;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+/* Link styles */
 nav a, footer a {
     text-decoration: none;
     color: #333;
     margin: 0 10px;
+    border-bottom: 2px dotted #333; /* Dotted underline for a retro touch */
 }
 
 nav a:hover, footer a:hover {
-    text-decoration: underline;
+    border-bottom-style: solid; /* Change to solid underline on hover */
+}
+
+/* Social Links with icons */
+#links a {
+    margin: 0 15px;
+    color: #555;
+}
+
+#links i {
+    transition: color 0.3s ease;
+}
+
+#links a:hover i {
+    color: #333; /* Darken the icon color on hover */
+}
+
+/* Retro footer style */
+footer {
+    border-top: 3px double #333; /* Double border line for a vintage touch */
+    padding-top: 20px;
+}
+
+/* Other retro styling enhancements */
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
 }
