@@ -118,3 +118,63 @@ h1, h2, h3, h4, h5, h6, p {
 .to-top:hover {
     background-color: var(--hover-color);
 }
+
+
+/* Blog Main Page */
+.blog-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.blog-title {
+    font-size: 2.4em;
+    margin-bottom: 20px;
+    font-family: 'Orbitron', sans-serif, 'Arial', 'Helvetica';
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post {
+    margin-bottom: 40px;
+}
+
+.blog-post h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    border-bottom: 2px dotted var(--main-color);
+    transition: border-bottom 0.3s ease; /* Smooth transitions */
+}
+
+.blog-post h2:hover {
+    border-bottom-style: solid;
+}
+
+.blog-post-date {
+    color: grey;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+/* Individual Blog Post Page */
+.post-content {
+    line-height: 1.8;
+    letter-spacing: 0.4px;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3 {
+    margin-top: 30px;
+}
+
+.post-content h1 {
+    font-size: 2.4em;
+}
+
+.post-content h2 {
+    font-size: 2.1em;
+}
+
+.post-content h3 {
+    font-size: 1.8em;
+}
