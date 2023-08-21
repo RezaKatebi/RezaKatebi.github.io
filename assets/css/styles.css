@@ -134,6 +134,17 @@ footer {
     font-size: 1.8em;
 }
 
+.post-content p {
+    margin-bottom: 0; /* Remove the default margin-bottom */
+    position: relative;
+}
+
+.post-content p::after {
+    content: "";
+    display: block;
+    height: 1em; /* Adjust the height to control the spacing */
+}
+
 /* Additional styles for Markdown-generated elements */
 blockquote {
     border-left: 4px solid var(--main-color);
