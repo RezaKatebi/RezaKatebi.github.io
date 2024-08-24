@@ -95,10 +95,52 @@ async function loadBlogPosts() {
     }
 }
 
+// Book reviews
+async function loadBookReviews() {
+    try {
+        // In a real application, you would fetch this data from your API
+        const reviews = [
+            { 
+                id: 1, 
+                title: "The Elegant Universe",
+                author: "Brian Greene",
+                rating: 4.5,
+                review: "A fascinating exploration of string theory and the nature of our universe.",
+                date: "2023-06-01"
+            }
+            // Add more book reviews as needed
+        ];
+
+        const bookReviewList = document.getElementById('book-review-list');
+        if (bookReviewList) {
+            bookReviewList.innerHTML = reviews.map(r => `
+                <article class="book-review" style="opacity: 0;">
+                    <h3>${r.title}</h3>
+                    <h4>by ${r.author}</h4>
+                    <p>Rating: ${r.rating}/5</p>
+                    <p>${r.review}</p>
+                    <small>${new Date(r.date).toLocaleDateString()}</small>
+                </article>
+            `).join('');
+            
+            // Fade in book reviews
+            bookReviewList.querySelectorAll('.book-review').forEach((review, index) => {
+                setTimeout(() => {
+                    review.style.transition = 'opacity 0.5s ease';
+                    review.style.opacity = 1;
+                }, index * 200);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading book reviews:', error);
+    }
+}
+
 // Initialize
 updateVisitCounter();
 loadComments();
 loadBlogPosts();
+loadBookReviews();
 
 // Intersection Observer for fade-in animations
 const observer = new IntersectionObserver((entries) => {
