@@ -169,3 +169,57 @@ code {
     background-color: #eaeaea;
     border-radius: var(--border-radius);
 }
+
+/* Importing fonts for Japanese paper style */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap');
+
+:root {
+    --japanese-paper: #f3e7d3;
+    --text-color-dark: #2c3e50;
+    --link-color: #c0392b;
+}
+
+#blog, #book-reviews, #research {
+    background-color: var(--japanese-paper);
+    font-family: 'Noto Serif JP', serif;
+    color: var(--text-color-dark);
+}
+
+#blog h2, #book-reviews h2, #research h2 {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--text-color-dark);
+}
+
+.blog-post, .book-review, .research-project {
+    background-color: var(--japanese-paper);
+    border: 1px solid #e0d0b8;
+    color: var(--text-color-dark);
+}
+
+.blog-post h3, .book-review h3, .research-project h3 {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--text-color-dark);
+}
+
+#blog a, #book-reviews a, #research a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+#blog a:hover, #book-reviews a:hover, #research a:hover {
+    text-decoration: underline;
+}
+
+.read-more {
+    background-color: var(--link-color);
+    color: var(--japanese-paper);
+}
+
+.read-more:hover {
+    background-color: var(--text-color-dark);
+}
+
+/* Override header styles for better contrast */
+header h1, nav ul li a {
+    color: var(--japanese-paper);
+}
