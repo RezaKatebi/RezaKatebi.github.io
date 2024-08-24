@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Noto+Sans+JP:wght@400;700&display=swap');
 
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #2c3e50;
+    --primary-color: #ff4500;
+    --secondary-color: #4a4a4a;
     --text-color: #333;
-    --background-color: #f4f4f4;
+    --background-color: #f0e6d2;
     --white: #ffffff;
 }
 
@@ -15,14 +15,15 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'VT323', 'Noto Sans JP', monospace, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYmBgYPj//z8DAwMDEwMDAQAAAP//AwAG/gL966RHLgAAAABJRU5ErkJggg==');
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -35,6 +36,7 @@ header {
     width: 100%;
     top: 0;
     z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 header .container {
@@ -44,7 +46,8 @@ header .container {
 }
 
 header h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 nav ul {
@@ -72,12 +75,18 @@ main {
 
 section {
     padding: 4rem 0;
+    border: 2px solid var(--secondary-color);
+    margin-bottom: 2rem;
+    background-color: var(--white);
 }
 
 h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
     color: var(--secondary-color);
+    font-family: 'Noto Sans JP', sans-serif;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
 }
 
 #hero {
@@ -91,12 +100,14 @@ h2 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: var(--white);
+    border-bottom: none;
 }
 
-#about, #blog, #comments, #contact {
-    background-color: var(--white);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid var(--white);
     margin-bottom: 2rem;
 }
 
@@ -105,8 +116,10 @@ h2 {
     height: 100px;
     margin-bottom: 1rem;
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: 2px solid var(--secondary-color);
     border-radius: 5px;
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
 }
 
 #comment-form button {
@@ -116,10 +129,12 @@ h2 {
     padding: 0.5rem 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
 }
 
 #comment-form button:hover {
-    background-color: #2980b9;
+    background-color: #ff6347;
 }
 
 .social-links {
@@ -142,6 +157,79 @@ footer {
     color: var(--white);
     text-align: center;
     padding: 1rem 0;
+}
+
+.blog-post {
+    border: 2px solid var(--secondary-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--white);
+    transition: transform 0.3s ease;
+}
+
+.blog-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.blog-post h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.blog-post small {
+    display: block;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.research-project {
+    border: 2px solid var(--secondary-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--white);
+    transition: transform 0.3s ease;
+}
+
+.research-project:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.research-project h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.research-project p {
+    margin-bottom: 0.5rem;
+}
+
+.research-project .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.research-project .tag {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
 }
 
 @media (max-width: 768px) {
