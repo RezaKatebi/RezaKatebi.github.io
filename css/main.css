@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&family=Noto+Serif+JP:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap');
 
 :root {
     --primary-color: #2c3e50;
@@ -162,15 +162,14 @@ h2::after {
     background-color: var(--secondary-color);
 }
 
-/* Update styles for blog, book reviews, and research sections */
 #blog, #book-reviews, #research {
     background-color: var(--japanese-paper);
-    font-family: 'Noto Serif JP', serif;
+    font-family: 'Roboto', sans-serif;
     color: var(--text-color);
 }
 
 #blog h2, #book-reviews h2, #research h2 {
-    font-family: 'Noto Serif JP', serif;
+    font-family: 'Playfair Display', serif;
     color: var(--primary-color);
 }
 
@@ -190,7 +189,7 @@ h2::after {
 }
 
 .blog-post h3, .book-review h3, .research-project h3 {
-    font-family: 'Noto Serif JP', serif;
+    font-family: 'Playfair Display', serif;
     color: var(--primary-color);
 }
 
