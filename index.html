@@ -1,71 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reza Katebi</title>
-    <link rel="icon" href="assets/images/bh_favicon.png" type="image/x-icon">
-    <meta name="description" content="Reza Katebi - Astrophysicist and Senior AI Engineer at Tesla.">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Reza Katebi - Senior Staff AI Engineer at Tesla</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-
-    <a href="#about-me" class="skip-link">Skip to content</a>
-
     <header>
-        <h1>Reza Katebi</h1>
-        <p>Astrophysicist/AI Scientist</p>
+        <div class="container">
+            <h1>Reza Katebi</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <section id="about-me">
-        <img src="assets/images/your-portrait.jpg" alt="Portrait of Reza Katebi" width="150">
-        <p>
-            I'm currently a Senior AI Engineer specializing in vision at Tesla. 
-            My academic background includes a PhD in Astrophysics from Ohio University, 
-            where my research centered on Active Galactic Nuclei (AGN) and the dynamics of 
-            accretion disks surrounding Super Massive Black Holes. Additionally, I have experience 
-            applying machine learning techniques to astronomy. Earlier in my career, I collaborated 
-            with the SXS team to simulate binary black hole mergers with extremal spins and the 
-            resulting gravitational waves.
+    <main>
+        <section id="hero">
+            <div class="container">
+                <h2>Senior Staff AI Engineer at Tesla</h2>
+                <p>Driving innovation in AI and Autopilot Infrastructure</p>
+            </div>
+        </section>
 
-            In my free time, I like reading books, playing guitar and taking on fun projects.
-    </section>
+        <section id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <p>As a Senior Staff AI Engineer at Tesla, I work on cutting-edge AI and Autopilot Infrastructure technologies. My expertise lies in building AI tools that drive innovation across Tesla's various departments, pushing the boundaries of what's possible in autonomous driving and beyond.</p>
+            </div>
+        </section>
 
-    <section id="links">
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/reza-katebi/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="Reza's LinkedIn Profile">
-            <i class="fab fa-linkedin fa-2x"></i>
-        </a>
-        
-        <!-- GitHub -->
-        <a href="https://github.com/RezaKatebi" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="Reza's GitHub Profile">
-            <i class="fab fa-github fa-2x"></i>
-        </a>
+        <section id="blog">
+            <div class="container">
+                <h2>Blog</h2>
+                <div id="blog-posts">
+                    <!-- Blog posts will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
 
-        <!-- Google Scholar -->
-        <a href="https://scholar.google.com/citations?user=zvTWYeQAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" title="Google Scholar" aria-label="Reza's Google Scholar Profile">
-            <i class="fas fa-graduation-cap fa-2x"></i>
-        </a>
-        
-        <!-- Resume (using a file icon as an example) -->
-        <a href="assets/files/RezaKatebi.pdf" target="_blank" rel="noopener noreferrer" title="Resume" aria-label="Download Reza's Resume">
-            <i class="fas fa-file-alt fa-2x"></i>
-        </a>
-    </section>
+        <section id="comments">
+            <div class="container">
+                <h2>Comments</h2>
+                <div id="comment-list">
+                    <!-- Existing comments will be loaded here -->
+                </div>
+                <form id="comment-form">
+                    <textarea id="comment-text" required placeholder="Share your thoughts..."></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </div>
+        </section>
 
-    <nav>
-        <a href="pages/research.html">Research</a> |
-        <a href="pages/book-reviews">Book Reviews</a> |
-        <a href="pages/blog/index.html">Blog</a>
-    </nav>
+        <section id="contact">
+            <div class="container">
+                <h2>Contact</h2>
+                <p>Get in touch: <a href="mailto:rkatebi.gravity@gmail.com">rkatebi.gravity@gmail.com</a></p>
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
-        © 2023 by Reza Katebi. All Rights Reserved. <a href="#" class="to-top">Back to top</a>
+        <div class="container">
+            <p>Visit Count: <span id="visit-count">0</span></p>
+            <p>&copy; 2023 Reza Katebi. All rights reserved.</p>
+        </div>
     </footer>
 
+    <script src="script.js"></script>
 </body>
-
 </html>
