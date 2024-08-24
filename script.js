@@ -68,8 +68,8 @@ async function loadBlogPosts() {
                 id: 1, 
                 title: "Consciousness",
                 excerpt: "Exploring the nature of consciousness and its implications.",
-                date: "2023-05-15", // Update this date as needed
-                url: "pages/Consciousness.html"
+                date: "2023-05-15",
+                url: "pages/blog/posts/Consciousness.html"
             }
         ];
 
