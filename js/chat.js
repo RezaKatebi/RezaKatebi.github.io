@@ -42,6 +42,10 @@ const runtime   = $("#runtime");
 let engine = null;
 let history = [{ role: "system", content: SYSTEM_PROMPT }];
 let generating = false;
+/* interruptGenerate() only sets a flag inside WebLLM: the stream then ends
+   normally rather than rejecting, so a stop is indistinguishable from a finished
+   answer unless we record it ourselves. */
+let stopped = false;
 
 /* ---------------------------------------------------------------- helpers */
 
@@ -305,6 +309,7 @@ async function boot() {
 async function ask(question) {
   if (generating || !engine) return;
   generating = true;
+  stopped = false;
   input.value = "";
   input.style.height = "auto";
   sendBtn.hidden = true;
@@ -358,23 +363,25 @@ async function ask(question) {
       }
     }
 
+    /* A stop that produced text is a real (partial) answer and is kept. With no
+       text at all there is nothing worth remembering, so drop the user turn too:
+       pushing an empty assistant message would leave a blank turn in every later
+       request and desync what the model sees from what is on screen. */
     const clean = stripPreamble(stripThink(answer).trim());
-    if (!clean) {
-      body.replaceChildren(render("I didn't manage an answer to that one. Try rephrasing?"));
-    }
-    history.push({ role: "assistant", content: clean });
-  } catch (err) {
-    if (err?.name === "AbortError") {
-      /* Visitor pressed Stop. Keep whatever streamed so the log and history agree. */
-      const partial = stripPreamble(stripThink(answer).trim());
-      if (partial) history.push({ role: "assistant", content: partial });
-      else history.pop();
+    if (clean) {
+      history.push({ role: "assistant", content: clean });
     } else {
-      console.error(err);
       body.classList.remove("thinking");
-      body.replaceChildren(render("Something went wrong generating that answer. Try again?"));
+      body.replaceChildren(render(stopped
+        ? "Stopped before it got going."
+        : "I didn't manage an answer to that one. Try rephrasing?"));
       history.pop();
     }
+  } catch (err) {
+    console.error(err);
+    body.classList.remove("thinking");
+    body.replaceChildren(render("Something went wrong generating that answer. Try again?"));
+    history.pop();
   } finally {
     generating = false;
     sendBtn.hidden = false;
@@ -399,7 +406,7 @@ input.addEventListener("input", () => {
   input.style.height = Math.min(input.scrollHeight, 160) + "px";
 });
 
-stopBtn.addEventListener("click", () => { engine?.interruptGenerate(); });
+stopBtn.addEventListener("click", () => { stopped = true; engine?.interruptGenerate(); });
 
 $("#start").addEventListener("click", async () => {
   if (await checkWebGPU()) boot();
