@@ -1,6 +1,6 @@
 /* Pinned: every behaviour below was verified against this exact build. */
 import * as webllm from "https://esm.run/@mlc-ai/web-llm@0.2.84";
-import { SYSTEM_PROMPT, SUGGESTIONS } from "./profile.js";
+import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js";
 
 /* Candidate models, newest first, resolved against whatever this build of WebLLM
    actually ships so a CDN version bump can't strand us on a dead id.
@@ -428,6 +428,21 @@ async function ask(question) {
   chips.hidden = true;
 
   addMessage("user", question);
+
+  /* Refuse anything unrelated before spending a single token on it. The model is
+     small enough that it would answer confidently and wrongly. */
+  const kind = classify(question);
+  if (kind !== "on-topic") {
+    addMessage("assistant", REFUSALS[kind]);
+    chips.hidden = false;
+    setStatus(kind === "greeting" ? "Ready" : "Off topic, not sent to the model");
+    generating = false;
+    sendBtn.hidden = false;
+    stopBtn.hidden = true;
+    input.focus();
+    return;
+  }
+
   turns.push({ role: "user", content: question });
 
   const body = addMessage("assistant", "");
