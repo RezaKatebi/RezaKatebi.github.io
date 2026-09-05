@@ -74,7 +74,7 @@ def proj(r, phi):
     return (CX + x * S, CY + y * S)
 
 def poly(r, a0, a1, n=64):
-    return "M" + "L".join(f"{x:.0f},{y:.0f}"
+    return "M" + "L".join(f"{x:.1f},{y:.1f}"
                           for x, y in (proj(r, a0 + (a1 - a0) * k / n) for k in range(n + 1)))
 
 # ---- wireframe, split at the silhouette so the far half can be dimmed -----
@@ -82,13 +82,14 @@ back, front = [], []
 for r in radii(16)[1:]:
     back.append(poly(r, -math.pi, 0.0))
     front.append(poly(r, 0.0, math.pi))
-rr = radii(48)
+rr = radii(64)
 for phi in spoke_phis:
-    line = "M" + "L".join(f"{x:.0f},{y:.0f}" for x, y in (proj(r, phi) for r in rr))
+    line = "M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in (proj(r, phi) for r in rr))
     (back if math.sin(phi) < 0 else front).append(line)
 
 def group(paths, opacity, width="0.9"):
-    return (f'<g fill="none" stroke="currentColor" stroke-width="{width}" opacity="{opacity}">'
+    return (f'<g fill="none" stroke="currentColor" stroke-width="{width}"'
+            f' opacity="{opacity}" shape-rendering="geometricPrecision">'
             + "".join(f'<path d="{p}"/>' for p in paths) + "</g>")
 
 orbit_path  = poly(R_ISCO, -math.pi, math.pi, 120) + "Z"
