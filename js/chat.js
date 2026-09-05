@@ -38,9 +38,35 @@ const stopBtn   = $("#stop");
 const statusEl  = $("#status");
 const chips     = $("#chips");
 const runtime   = $("#runtime");
+const clearBtn  = $("#clear");
 
 let engine = null;
-let history = [{ role: "system", content: SYSTEM_PROMPT }];
+
+/* Only user/assistant turns live here; the system message is prepended per
+   request by buildMessages() so the context budget can be enforced in one place. */
+let turns = [];
+
+/* WebLLM rebuilds the conversation from `messages` on every call and prefills all
+   of it, so an unbounded history makes each answer slower than the last and
+   eventually throws ContextWindowSizeExceededError, which would break the chat
+   for good. Budget in characters (~4 per token) against the model's 4096 window. */
+const CTX_CHARS      = 4096 * 4;
+const RESERVE_CHARS  = 240 * 4 + 1200;   // room for max_tokens plus slack
+
+function buildMessages() {
+  const budget = CTX_CHARS - SYSTEM_PROMPT.length - RESERVE_CHARS;
+  const kept = [];
+  let used = 0;
+  for (let i = turns.length - 1; i >= 0; i--) {
+    const size = turns[i].content.length;
+    if (used + size > budget && kept.length) break;
+    kept.unshift(turns[i]);
+    used += size;
+  }
+  /* A window must not open on an assistant reply with no question before it. */
+  while (kept.length && kept[0].role === "assistant") kept.shift();
+  return [{ role: "system", content: SYSTEM_PROMPT }, ...kept];
+}
 let generating = false;
 /* interruptGenerate() only sets a flag inside WebLLM: the stream then ends
    normally rather than rejecting, so a stop is indistinguishable from a finished
@@ -148,6 +174,23 @@ function stripPreamble(t) {
   return out === t ? t : out.charAt(0).toUpperCase() + out.slice(1);
 }
 
+function attachCopy(el, getText) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "copy-btn";
+  btn.textContent = "copy";
+  btn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(getText());
+      btn.textContent = "copied";
+    } catch (e) {
+      btn.textContent = "press ctrl+c";   // clipboard blocked, e.g. insecure context
+    }
+    setTimeout(() => { btn.textContent = "copy"; }, 1600);
+  });
+  el.appendChild(btn);
+}
+
 function addMessage(role, text) {
   const el = document.createElement("div");
   el.className = "msg msg-" + role;
@@ -161,6 +204,53 @@ function addMessage(role, text) {
 }
 
 function setStatus(text) { statusEl.textContent = text; }
+
+/* The reader may scroll up to re-read an earlier answer while a new one streams;
+   only pin to the bottom when they are already there. */
+function nearBottom() {
+  return log.scrollHeight - log.scrollTop - log.clientHeight < 80;
+}
+
+/* Rebuilding the answer DOM on every token is quadratic in answer length and
+   forces a reflow per token. Coalesce to one render per animation frame. */
+function streamInto(body) {
+  let pending = null;
+  let queued = false;
+  const flush = () => {
+    queued = false;
+    if (pending === null) return;
+    const stick = nearBottom();
+    body.replaceChildren(render(pending));
+    pending = null;
+    if (stick) log.scrollTop = log.scrollHeight;
+  };
+  return {
+    update(text) {
+      pending = text;
+      if (!queued) { queued = true; requestAnimationFrame(flush); }
+    },
+    finish(text) { pending = text; flush(); },
+  };
+}
+
+/* Conversation survives a reload. Kept on this device only; nothing is uploaded. */
+const STORE_KEY = "chat-turns-v1";
+function saveTurns() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(turns.slice(-20)));
+  } catch (e) { /* private mode or full quota: the chat still works, just not across reloads */ }
+}
+function loadTurns() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    if (Array.isArray(parsed)) {
+      return parsed.filter((t) => t && typeof t.content === "string"
+        && (t.role === "user" || t.role === "assistant"));
+    }
+  } catch (e) { /* ignore malformed storage */ }
+  return [];
+}
 
 function fail(title, detail, links = true) {
   gate.hidden = false;
@@ -208,9 +298,18 @@ async function checkWebGPU() {
 
 /* ------------------------------------------------------------------ engine */
 
+let queued = false;   // a question typed before the model finished loading
+
 async function boot() {
   gate.hidden = true;
   loader.hidden = false;
+
+  /* Reveal the conversation immediately so the download is not dead time: the
+     visitor can type now and the question fires the moment the model is ready. */
+  chat.hidden = false;
+  input.disabled = false;
+  input.placeholder = "Type your question now, it will answer once the model is ready…";
+  input.focus();
 
   /* Cache API storage is best-effort by default, so a browser under disk
      pressure can evict the model and force a re-download on the next visit.
@@ -285,7 +384,8 @@ async function boot() {
   const warmStart = performance.now();
   try {
     const warm = await engine.chat.completions.create({
-      messages: [...history, { role: "user", content: "Which company does Reza work for?" }],
+      messages: [{ role: "system", content: SYSTEM_PROMPT },
+                 { role: "user", content: "Which company does Reza work for?" }],
       max_tokens: 8, temperature: 0.1,
       extra_body: { enable_thinking: false },
     });
@@ -299,9 +399,20 @@ async function boot() {
   chat.hidden = false;
   setStatus(modelId.replace(/-MLC$/, "") + " · running locally");
   showRuntime(modelId);
+  input.placeholder = "Ask about his experience, research, or skills…";
   input.disabled = false;
   sendBtn.disabled = false;
+
+  /* Replay anything from a previous visit so the log matches what the model sees. */
+  turns = loadTurns();
+  if (turns.length) {
+    for (const t of turns) addMessage(t.role, t.content);
+    clearBtn.hidden = false;
+    log.scrollTop = log.scrollHeight;
+  }
+
   input.focus();
+  if (queued && input.value.trim()) { queued = false; form.requestSubmit(); }
 }
 
 /* --------------------------------------------------------------- generation */
@@ -317,17 +428,22 @@ async function ask(question) {
   chips.hidden = true;
 
   addMessage("user", question);
-  history.push({ role: "user", content: question });
+  turns.push({ role: "user", content: question });
 
   const body = addMessage("assistant", "");
   body.classList.add("thinking");
+  body.setAttribute("aria-busy", "true");
+  const stream_ = streamInto(body);
   let answer = "";
   const t0 = performance.now();
   let firstTokenMs = null;
+  const tick = setInterval(() => {
+    if (firstTokenMs === null) setStatus(`Thinking… ${((performance.now() - t0) / 1000).toFixed(0)}s`);
+  }, 500);
 
   try {
     const stream = await engine.chat.completions.create({
-      messages: history,
+      messages: buildMessages(),
       stream: true,
       stream_options: { include_usage: true },
       /* Near-greedy: this is grounded lookup over a fixed profile, not creative
@@ -338,18 +454,17 @@ async function ask(question) {
       top_p: 0.9,
       frequency_penalty: 0.4,
       presence_penalty: 0.2,
-      max_tokens: 500,
+      max_tokens: 240,
       extra_body: { enable_thinking: false },
     });
 
     for await (const chunk of stream) {
       const delta = chunk.choices?.[0]?.delta?.content;
       if (delta) {
-        if (firstTokenMs === null) firstTokenMs = performance.now() - t0;
+        if (firstTokenMs === null) { firstTokenMs = performance.now() - t0; clearInterval(tick); }
         answer += delta;
         body.classList.remove("thinking");
-        body.replaceChildren(render(stripPreamble(stripThink(answer).trimStart())));
-        log.scrollTop = log.scrollHeight;
+        stream_.update(stripPreamble(stripThink(answer).trimStart()));
       }
       if (chunk.usage) {
         const secs = (performance.now() - t0) / 1000;
@@ -368,24 +483,32 @@ async function ask(question) {
        pushing an empty assistant message would leave a blank turn in every later
        request and desync what the model sees from what is on screen. */
     const clean = stripPreamble(stripThink(answer).trim());
+    stream_.finish(clean || "");
+    body.removeAttribute("aria-busy");
     if (clean) {
-      history.push({ role: "assistant", content: clean });
+      turns.push({ role: "assistant", content: clean });
+      saveTurns();
+      attachCopy(body.parentElement, () => clean);
     } else {
       body.classList.remove("thinking");
       body.replaceChildren(render(stopped
         ? "Stopped before it got going."
         : "I didn't manage an answer to that one. Try rephrasing?"));
-      history.pop();
+      turns.pop();
     }
   } catch (err) {
     console.error(err);
     body.classList.remove("thinking");
-    body.replaceChildren(render("Something went wrong generating that answer. Try again?"));
-    history.pop();
+    body.replaceChildren(render(err?.name === "ContextWindowSizeExceededError"
+      ? "This conversation got too long for the model's context. Older turns were dropped; ask again."
+      : "Something went wrong generating that answer. Try again?"));
+    turns.pop();
   } finally {
+    clearInterval(tick);
     generating = false;
     sendBtn.hidden = false;
     stopBtn.hidden = true;
+    clearBtn.hidden = turns.length === 0;
     input.focus();
   }
 }
@@ -395,7 +518,14 @@ async function ask(question) {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const q = input.value.trim();
-  if (q) ask(q);
+  if (!q) return;
+  if (!engine) {
+    /* Still downloading. Keep the text in the box and send it on ready. */
+    queued = true;
+    setStatus("Queued. This will send as soon as the model finishes loading.");
+    return;
+  }
+  ask(q);
 });
 
 input.addEventListener("keydown", (e) => {
@@ -407,6 +537,17 @@ input.addEventListener("input", () => {
 });
 
 stopBtn.addEventListener("click", () => { stopped = true; engine?.interruptGenerate(); });
+
+clearBtn.addEventListener("click", () => {
+  turns = [];
+  try { localStorage.removeItem(STORE_KEY); } catch (e) { /* nothing to remove */ }
+  log.replaceChildren();
+  addMessage("assistant", "Cleared. Ask me anything about Reza's background.");
+  chips.hidden = false;
+  clearBtn.hidden = true;
+  setStatus("Ready");
+  input.focus();
+});
 
 $("#start").addEventListener("click", async () => {
   if (await checkWebGPU()) boot();

@@ -438,3 +438,27 @@ footer { border-top: 1px solid var(--surface-line); padding: 40px 0; margin-top:
 .runtime dd.good { color: #6fcf8e; }
 :root[data-theme="light"] .runtime dd.good { color: #217a45; }
 @media (max-width: 640px) { .runtime { grid-template-columns: repeat(2, 1fr); } }
+
+
+/* chat footer row + inline text buttons */
+.chat-foot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.chat-foot .chat-status { margin-top: 12px; }
+.linkish {
+  margin-top: 12px; background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--font-mono); font-size: .73rem; color: var(--text-faint);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.linkish:hover { color: var(--accent); }
+
+/* copy control, revealed on hover or keyboard focus of an answer */
+.msg-assistant { position: relative; }
+.copy-btn {
+  position: absolute; top: -2px; right: 0; opacity: 0;
+  background: var(--bg-elev); border: 1px solid var(--surface-line);
+  color: var(--text-dim); border-radius: 6px; cursor: pointer;
+  font-family: var(--font-mono); font-size: .68rem; padding: 3px 8px;
+  transition: opacity .15s ease, color .15s ease, border-color .15s ease;
+}
+.msg-assistant:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+@media (hover: none) { .copy-btn { opacity: 1; } }
