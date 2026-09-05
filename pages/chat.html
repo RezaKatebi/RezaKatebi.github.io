@@ -83,6 +83,13 @@
         <button class="btn btn-primary" id="send" type="submit" disabled>Send</button>
         <button class="btn" id="stop" type="button" hidden>Stop</button>
       </form>
+      <dl class="runtime" id="runtime" hidden>
+        <div><dt>Running on</dt><dd id="rt-gpu">your GPU</dd></div>
+        <div><dt>Model</dt><dd id="rt-model">&#8212;</dd></div>
+        <div><dt>On this device</dt><dd id="rt-cache">&#8212;</dd></div>
+        <div><dt>Last answer</dt><dd id="rt-speed">&#8212;</dd></div>
+        <div><dt>Sent to a server</dt><dd id="rt-net">0 bytes</dd></div>
+      </dl>
       <p class="chat-status" id="status">Idle</p>
     </div>
 

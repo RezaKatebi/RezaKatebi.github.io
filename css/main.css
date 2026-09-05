@@ -415,3 +415,26 @@ footer { border-top: 1px solid var(--surface-line); padding: 40px 0; margin-top:
   .bh { order: -1; width: min(330px, 90%); max-width: 90%; margin: 0 auto; }
   .portrait { width: min(260px, 70%); }
 }
+
+
+/* ============================================================
+   Local runtime panel: what the visitor's own machine is doing.
+   ============================================================ */
+.runtime {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 1px; margin: 18px 0 0; padding: 0;
+  background: var(--surface-line); border: 1px solid var(--surface-line);
+  border-radius: var(--radius-sm); overflow: hidden;
+}
+.runtime > div { background: var(--bg-elev); padding: 11px 14px; }
+.runtime dt {
+  font-family: var(--font-mono); font-size: .64rem; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--text-faint); margin-bottom: 4px;
+}
+.runtime dd {
+  margin: 0; font-family: var(--font-mono); font-size: .8rem; color: var(--text);
+  overflow-wrap: anywhere;
+}
+.runtime dd.good { color: #6fcf8e; }
+:root[data-theme="light"] .runtime dd.good { color: #217a45; }
+@media (max-width: 640px) { .runtime { grid-template-columns: repeat(2, 1fr); } }
