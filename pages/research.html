@@ -1,60 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research & Publications</title>
-    <link rel="stylesheet" href="../css/paper.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research &amp; Publications | Reza Katebi</title>
+<meta name="description" content="Peer-reviewed publications by Reza Katebi in deep learning for astronomy, active galactic nuclei, numerical relativity, and black hole thermodynamics.">
+<link rel="icon" type="image/png" href="../assets/images/bh_favicon.png">
+<meta name="theme-color" content="#07080a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap"></noscript>
+<link rel="stylesheet" href="../css/main.css">
+<script>try{if(localStorage.getItem("theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
+<script src="../js/app.js" defer></script>
 </head>
-
 <body>
-
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="research.html">Research & Publications</a>
-        <!-- Add other navigation links as needed -->
+<div class="sky" aria-hidden="true"></div>
+<!-- BUILD:nav -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html">Reza Katebi<span class="dot">.</span></a>
+    <button class="icon-btn nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../pages/research.html">Research</a>
+      <a href="../pages/blog/index.html">Writing</a>
+      <a href="../pages/chat.html">Ask&nbsp;AI</a>
+      <a href="../assets/files/RezaKatebi.pdf">Resume</a>
     </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<!-- /BUILD:nav -->
+<main class="section">
+  <div class="wrap" style="max-width:880px">
+    <p class="eyebrow">Research</p>
+    <h1 style="font-size:clamp(1.9rem,4.6vw,2.8rem)">Publications</h1>
+    <p class="lead" style="margin-bottom:20px">Work spanning deep learning for astronomy, the variability of supermassive black holes, numerical relativity for gravitational wave detection, and black hole thermodynamics.</p>
+    <div class="hero-cta" style="margin-bottom:56px">
+      <a class="btn" href="https://scholar.google.com/citations?user=zvTWYeQAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      <a class="btn" href="https://arxiv.org/a/katebi_r_1" target="_blank" rel="noopener">arXiv</a>
+    </div>
 
-    <h1>Research & Publications</h1>
+    <h2 class="reveal">Deep learning in astronomy</h2>
+    <ul class="pubs reveal">
+      <li>
+        <span class="authors"><em>Katebi, R.</em>, Zhou, Y., Chornock, R., &amp; Bunescu, R. (2019).</span>
+        Galaxy morphology prediction using capsule networks.
+        <span class="venue">Monthly Notices of the Royal Astronomical Society, 486(2), 1539–1547.</span>
+        <span class="pub-links">
+          <a href="https://arxiv.org/abs/1809.08377" target="_blank" rel="noopener">arXiv</a>
+          <a href="https://www.ohio-forum.com/2018/10/katebis-class-project-leads-to-a-more-accurate-way-to-classify-galaxy-images/" target="_blank" rel="noopener">press</a>
+        </span>
+      </li>
+    </ul>
 
-    <section>
-        <h2>Deep Learning in Astronomy</h2>
-        <ul>
-            <li>Katebi, R., Zhou, Y., Chornock, R., and Bunescu, R., 2018. <a href="https://arxiv.org/abs/1809.08377">Galaxy morphology prediction using capsule networks.</a> arXiv preprint arXiv:1809.08377. <a href="https://www.ohio-forum.com/2018/10/katebis-class-project-leads-to-a-more-accurate-way-to-classify-galaxy-images/">News</a></li>
-        </ul>
+    <h2 class="reveal" style="margin-top:52px">Observational astronomy</h2>
+    <ul class="pubs reveal">
+      <li>
+        <span class="authors"><em>Katebi, R.</em>, Chornock, R., Berger, E., Jones, D. O., Lunnan, R., Margutti, R., et al. (2019).</span>
+        PS1-13cbe: The rapid transition of a Seyfert 2 to a Seyfert 1.
+        <span class="venue">Monthly Notices of the Royal Astronomical Society, 487(3), 4057–4070.</span>
+        <span class="pub-links">
+          <a href="https://arxiv.org/abs/1811.03694" target="_blank" rel="noopener">arXiv</a>
+          <a href="https://phys.org/news/2018-11-rapid-turn-on-nuclear-transient-astronomers.html" target="_blank" rel="noopener">press</a>
+        </span>
+      </li>
+      <li>
+        <span class="authors">Chornock, R., <em>Katebi, R.</em>, Brown, J. S., et al. (2016).</span>
+        ASASSN-16ci: Discovery of a Type Ia supernova in NGC 1272.
+        <span class="venue">The Astronomer's Telegram, 8765.</span>
+      </li>
+      <li>
+        <span class="authors">Chornock, R., Bhirombhakdi, K., <em>Katebi, R.</em>, et al. (2016).</span>
+        Spectroscopic classification of two superluminous supernovae.
+        <span class="venue">The Astronomer's Telegram, 8790.</span>
+      </li>
+    </ul>
 
-        <h2>Astronomy</h2>
-        <ul>
-            <li>Katebi, R., Chornock, R., Berger, E., et al., 2018. <a href="https://arxiv.org/abs/1811.03694">PS1-13cbe: The Rapid" Turn on" of a Seyfert 1.</a> arXiv preprint arXiv:1811.03694. <a href="https://phys.org/news/2018-11-rapid-turn-on-nuclear-transient-astronomers.html">News</a></li>
-            <li>Chornock, R., Katebi, R., Brown, J. S., et al., 2016. ASASSN-16ci: Discovery of A Type Ia Supernova in NGC 1272. The Astronomer's Telegram, 8765.</li>
-            <li>Chornock, R., Bhirombhakdi, K., Katebi, R., et al., 2016. Spectroscopic classification of two superluminous supernovae. The Astronomer's Telegram, 8790.</li>
-        </ul>
+    <h2 class="reveal" style="margin-top:52px">Numerical relativity &amp; computational physics</h2>
+    <ul class="pubs reveal">
+      <li>
+        <span class="authors">Chatziioannou, K., Lovelace, G., Boyle, M., et al. (2018).</span>
+        Measuring the properties of nearly extremal black holes with gravitational waves.
+        <span class="pub-links"><a href="https://arxiv.org/abs/1804.03704" target="_blank" rel="noopener">arXiv</a></span>
+      </li>
+      <li>
+        <span class="authors">Ossokine, S., Dietrich, T., Foley, E., et al. (2017).</span>
+        Assessing the energetics of spinning binary black hole systems.
+        <span class="pub-links"><a href="https://arxiv.org/abs/1712.06533" target="_blank" rel="noopener">arXiv</a></span>
+      </li>
+      <li>
+        <span class="authors">Lovelace, G., Scheel, M. A., Owen, R., et al. (2015).</span>
+        Nearly extremal apparent horizons in simulations of merging black holes.
+        <span class="venue">Classical and Quantum Gravity, 32(6), 065007.</span>
+        <span class="pub-links"><a href="https://arxiv.org/abs/1411.7297" target="_blank" rel="noopener">arXiv</a></span>
+      </li>
+    </ul>
 
-        <h2>Computational Physics</h2>
-        <ul>
-            <li>Chatziioannou, K., Lovelace, G., Boyle, M., et al., 2018. <a href="https://arxiv.org/pdf/1804.03704.pdf">Measuring the properties of nearly extremal black holes with gravitational waves.</a> arXiv preprint arXiv:1804.03704.</li>
-            <li>Ossokine, S., Dietrich, T., Foley, E., et al., 2017. <a href="https://arxiv.org/pdf/1712.06533.pdf">Assessing the Energetics of Spinning Binary Black Hole Systems.</a> arXiv preprint arXiv:1712.06533.</li>
-            <li>Lovelace, G., Scheel, M. A., Owen, R., et al., 2015. <a href="https://arxiv.org/pdf/1411.7297.pdf">Nearly extremal apparent horizons in simulations of merging black holes.</a> Classical and Quantum Gravity, 32 (6), 065007.</li>
-        </ul>
+    <h2 class="reveal" style="margin-top:52px">Theoretical physics</h2>
+    <ul class="pubs reveal">
+      <li>
+        <span class="authors">Corda, C., <em>Katebi, R.</em>, &amp; Schmidt, N. O. (2017).</span>
+        Interferometric detection of gravitational waves: how can a wild roam through mindless mathematical laws really be a trek towards the goal of unification?
+        <span class="pub-links"><a href="https://arxiv.org/abs/1703.01493" target="_blank" rel="noopener">arXiv</a></span>
+      </li>
+      <li>
+        <span class="authors">Corda, C., Hendi, S. H., <em>Katebi, R.</em>, &amp; Schmidt, N. O. (2014).</span>
+        Initiating the effective unification of black hole horizon area and entropy quantization with quasi-normal modes.
+        <span class="venue">Advances in High Energy Physics, 2014.</span>
+        <span class="pub-links"><a href="https://downloads.hindawi.com/journals/ahep/2014/530547.pdf" target="_blank" rel="noopener">PDF</a></span>
+      </li>
+      <li>
+        <span class="authors">Corda, C., Hendi, S. H., <em>Katebi, R.</em>, &amp; Schmidt, N. O. (2014).</span>
+        Hawking radiation–quasi-normal modes correspondence and effective states for nonextremal Reissner–Nordström black holes.
+        <span class="venue">Advances in High Energy Physics, 2014.</span>
+        <span class="pub-links"><a href="https://downloads.hindawi.com/journals/ahep/2014/527874.pdf" target="_blank" rel="noopener">PDF</a></span>
+      </li>
+      <li>
+        <span class="authors">Corda, C., Hendi, S. H., <em>Katebi, R.</em>, &amp; Schmidt, N. O. (2013).</span>
+        Effective state, Hawking radiation and quasi-normal modes for Kerr black holes.
+        <span class="venue">Journal of High Energy Physics, 2013(6), 8.</span>
+        <span class="pub-links"><a href="https://arxiv.org/abs/1305.3710" target="_blank" rel="noopener">arXiv</a></span>
+      </li>
+      <li>
+        <span class="authors">Hendi, S. H., &amp; <em>Katebi, R.</em> (2012).</span>
+        Rotating black branes in Brans–Dicke theory with a nonlinear electromagnetic field.
+        <span class="venue">The European Physical Journal C, 72(11), 2235.</span>
+      </li>
+      <li>
+        <span class="authors">Khordad, R., Tafaroji, S., <em>Katebi, R.</em>, &amp; Ghanbari, A. (2012).</span>
+        Quantum wire with triangle cross section: optical properties.
+        <span class="venue">Communications in Theoretical Physics, 57(6), 1076.</span>
+      </li>
+      <li>
+        <span class="authors">Khordad, R., Tafaroji, S., <em>Katebi, R.</em>, &amp; Ghanbari, A. (2012).</span>
+        Optical and electronic properties of anisotropic parabolic quantum disks in the presence of tilted magnetic fields.
+        <span class="venue">Physica B: Condensed Matter, 407(3), 533–538.</span>
+      </li>
+    </ul>
 
-        <h2>Theoretical Physics</h2>
-        <ul>
-            <li>Corda, C., Katebi, R., & Schmidt, N. O., 2017. <a href="https://arxiv.org/pdf/1703.01493">Interferometric detection of gravitational waves: how can a wild roam through mindless mathematical laws really be a trek towards the goal of unification?</a> arXiv preprint arXiv:1703.01493.</li>
-            <li>Corda, C., Hendi, S. H., Katebi, R., & Schmidt, N. O., 2014. <a href="http://downloads.hindawi.com/journals/ahep/2014/530547.pdf">Initiating the effective unification of black hole horizon area and entropy quantization with quasi-normal modes.</a> Advances in High Energy Physics, 2014.</li>
-            <li>Corda, C., Hendi, S. H., Katebi, R., & Schmidt, N. O., 2014. <a href="http://downloads.hindawi.com/journals/ahep/2014/527874.pdf">Hawking radiation-quasi-normal modes correspondence and effective states for nonextremal Reissner-Nordström black holes.</a> Advances in High Energy Physics, 2014.</li>
-            <li>Corda, C., Hendi, S. H., Katebi, R., & Schmidt, N. O., 2013. <a href="https://arxiv.org/pdf/1305.3710">Effective state, Hawking radiation and quasi-normal modes for Kerr black holes.</a> Journal of High Energy Physics, 2013(6), 8.</li>
-            <li>Hendi, S. H., & Katebi, R., 2012. <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.269.6993&rep=rep1&type=pdf">Rotating black branes in Brans–Dicke theory with a nonlinear electromagnetic field.</a> The European Physical Journal C, 72(11), 2235.</li>
-            <li>Khordad, R., Tafaroji, S., Katebi, R., & Ghanbari, A., 2012. <a href="https://www.researchgate.net/profile/Reza_Katebi2/publication/254497062_Quantum_Wire_with_Triangle_Cross_Section_Optical_Properties/links/00b7d5357ea2822487000000.pdf">Quantum wire with triangle cross section: optical properties.</a> Communications in Theoretical Physics, 57(6), 1076.</li>
-            <li>Khordad, R., Tafaroji, S., Katebi, R., & Ghanbari, A., 2012. Optical and electronic properties of anisotropic parabolic quantum disks in the presence of tilted magnetic fields. Physica B: Condensed Matter, 407(3), 533-538.</li>
-        </ul>
-    </section>
-
-    <footer>
-        <!-- Add footer content, if any -->
-    </footer>
-
+    <h2 class="reveal" style="margin-top:52px">Invited talks</h2>
+    <ul class="pubs reveal">
+      <li>233rd meeting of the American Astronomical Society, Seattle, WA (2019).</li>
+      <li>Ohio University PandA GradS Alumni Industry Night (2020).</li>
+      <li>Atlanta Deep Learning and PyData Atlanta meetups, on GANs, capsule networks, and deep learning for galaxy classification (2018).</li>
+    </ul>
+  </div>
+</main>
+<!-- BUILD:footer -->
+<footer>
+  <div class="wrap foot">
+    <p>&copy; <span data-year></span> Reza Katebi</p>
+    <div class="social">
+      <a href="https://www.linkedin.com/in/reza-katebi/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.06c.53-.95 1.83-1.95 3.76-1.95C20.5 8.75 22 11 22 14.5V21h-4v-5.9c0-1.4-.03-3.2-2-3.2s-2.3 1.5-2.3 3.1V21H9z"/></svg></a>
+      <a href="https://github.com/RezaKatebi" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.55v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.35-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.78 2.71 1.27 3.37.97.1-.75.4-1.27.73-1.56-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .3.2.66.8.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=zvTWYeQAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 1 8.5l11 6.5 9-5.32V17h2V8.5zM4.5 13.2v3.6c0 2.3 3.36 4.2 7.5 4.2s7.5-1.9 7.5-4.2v-3.6L12 17.6z"/></svg></a>
+      <a href="mailto:rkatebi.gravity@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></a>
+    </div>
+  </div>
+</footer>
+<!-- /BUILD:footer -->
 </body>
-
 </html>

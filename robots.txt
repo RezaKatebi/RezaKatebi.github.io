@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rezakatebi.github.io/sitemap.xml

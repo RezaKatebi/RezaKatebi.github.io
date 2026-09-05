@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book Notes | Reza Katebi</title>
-<meta name="description" content="Books Reza Katebi has been reading, and what stuck.">
+<title>Ask AI about Reza Katebi, running on your GPU</title>
+<meta name="description" content="A language model running entirely in your browser via WebGPU, answering questions about Reza Katebi's background and experience. No server, no data leaves your machine.">
 <link rel="icon" type="image/png" href="../assets/images/bh_favicon.png">
 <meta name="theme-color" content="#07080a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../css/main.css">
 <script>try{if(localStorage.getItem("theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
 <script src="../js/app.js" defer></script>
+
 </head>
 <body>
 <div class="sky" aria-hidden="true"></div>
@@ -43,22 +44,58 @@
 </header>
 <!-- /BUILD:nav -->
 <main class="section">
-  <div class="wrap" style="max-width:820px">
-    <p class="eyebrow">Reading</p>
-    <h1 style="font-size:clamp(1.9rem,4.6vw,2.8rem)">Book notes</h1>
-    <p class="lead" style="margin-bottom:48px">Mostly physics, machine learning, and the occasional detour into philosophy. Short notes on what stuck rather than proper reviews.</p>
+  <div class="wrap chat-shell">
+    <p class="eyebrow">Ask AI</p>
+    <h1 style="font-size:clamp(1.9rem,4.6vw,2.8rem)">Ask my resume anything.</h1>
+    <p class="lead" style="margin-bottom:34px">There is no server here. A quantized language model is downloaded to your browser, compiled to WebGPU shaders, and run on your own graphics card. Your questions never leave this machine. You can pull the network cable after it loads and it will keep answering.</p>
 
-    <div class="grid grid-2">
-      <article class="card reveal">
-        <h3 style="margin-bottom:2px">The Elegant Universe</h3>
-        <p class="mono" style="font-size:.76rem;color:var(--text-faint);margin-bottom:12px">Brian Greene &middot; ★★★★☆</p>
-        <p style="margin:0">A genuinely fascinating tour of string theory and the shape of the universe. Greene is unusually good at making the geometry intuitive without quietly lying about it, which is rare in popular physics.</p>
-      </article>
+    <div id="gate" class="gate card">
+      <div id="gate-body">
+        <h2 style="font-size:1.25rem">One-time download, then it's local forever.</h2>
+        <p>The model weights are about <strong>400&nbsp;MB</strong>. They stream from a CDN once and are stored in your browser's cache, so every later visit starts instantly. Best on a desktop or laptop with a discrete or Apple-silicon GPU.</p>
+        <div class="specs">
+          <div class="spec"><b>Qwen3.5 0.8B</b><span>4-bit quantized</span></div>
+          <div class="spec"><b>WebGPU</b><span>your hardware</span></div>
+          <div class="spec"><b>0 bytes</b><span>sent to any server</span></div>
+        </div>
+        <button class="btn btn-primary" id="start">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8z"/></svg>
+          Load the model
+        </button>
+        <p class="gate-note" id="gate-note">About 30 seconds on a fast connection, longer on a slow one. Instant every visit after that.</p>
+      </div>
     </div>
 
-    <p style="margin-top:44px;color:var(--text-faint);font-size:.9rem">More notes as I finish things. Recommendations welcome, so <a href="mailto:rkatebi.gravity@gmail.com">send them over</a>.</p>
+    <div id="loader" class="loader" hidden>
+      <p class="eyebrow" style="justify-content:center">Loading</p>
+      <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Model download progress"><i id="bar"></i></div>
+      <p class="loader-msg" id="loader-msg">Starting up…</p>
+    </div>
+
+    <div id="chat" hidden>
+      <div class="log" id="log" aria-live="polite" aria-atomic="false">
+        <div class="msg msg-assistant"><div class="msg-body"><p>Ready. Ask me about Reza's work on Tesla's GenAI platform, his computer vision research, his physics background, or anything else on his resume.</p></div></div>
+      </div>
+      <div class="chips" id="chips"></div>
+      <form class="composer" id="composer">
+        <label for="input" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your question</label>
+        <textarea id="input" rows="1" placeholder="Ask about his experience, research, or skills…" disabled></textarea>
+        <button class="btn btn-primary" id="send" type="submit" disabled>Send</button>
+        <button class="btn" id="stop" type="button" hidden>Stop</button>
+      </form>
+      <p class="chat-status" id="status">Idle</p>
+    </div>
+
+    <p style="margin-top:34px;font-size:.88rem;color:var(--text-faint)">
+      A small model can get details wrong. For anything that matters, the
+      <a href="../assets/files/RezaKatebi.pdf">resume</a> and
+      <a href="https://www.linkedin.com/in/reza-katebi/" target="_blank" rel="noopener">LinkedIn</a> are authoritative,
+      or just <a href="mailto:rkatebi.gravity@gmail.com">email me</a>.
+      Built with <a href="https://github.com/mlc-ai/web-llm" target="_blank" rel="noopener">WebLLM</a>.
+    </p>
   </div>
 </main>
+<script type="module" src="../js/chat.js"></script>
 <!-- BUILD:footer -->
 <footer>
   <div class="wrap foot">
