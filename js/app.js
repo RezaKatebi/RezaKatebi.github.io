@@ -62,6 +62,23 @@
       });
     }
 
+    // --- keep the model alive across page changes -------------------------
+    /* The chat page puts the model in a service worker so it survives
+       navigation, but browsers stop an idle service worker after ~30s. These
+       pings keep it resident while the visitor is anywhere on the site. Nothing
+       is registered here: if they have never opened the chat there is no
+       controller and this does nothing. */
+    var sw = navigator.serviceWorker;
+    var engineLive = false;
+    try { engineLive = sessionStorage.getItem("chat-engine-live") === "1"; } catch (e) {}
+    if (sw && sw.controller && engineLive) {
+      setInterval(function () {
+        if (sw.controller) {
+          sw.controller.postMessage({ kind: "keepAlive", uuid: "site-" + Date.now() });
+        }
+      }, 10000);
+    }
+
     // --- year stamp ------------------------------------------------------
     document.querySelectorAll('[data-year]').forEach(function (el) {
       el.textContent = String(new Date().getFullYear());

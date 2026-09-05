@@ -462,3 +462,10 @@ footer { border-top: 1px solid var(--surface-line); padding: 40px 0; margin-top:
 .msg-assistant:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
 .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
 @media (hover: none) { .copy-btn { opacity: 1; } }
+
+
+/* While the model loads the conversation is visibly not ready yet: typing is
+   allowed (it queues) but nothing here should look like a live chat. */
+.is-loading .log { opacity: .62; }
+.is-loading .composer { border-style: dashed; }
+.is-loading #send { background: var(--bg-elev-2); border-color: var(--surface-line); color: var(--text-dim); }

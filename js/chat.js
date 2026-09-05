@@ -1,5 +1,5 @@
 /* Pinned: every behaviour below was verified against this exact build. */
-import * as webllm from "https://esm.run/@mlc-ai/web-llm@0.2.84";
+import * as webllm from "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.84/+esm";
 import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js";
 
 /* Candidate models, newest first, resolved against whatever this build of WebLLM
@@ -74,6 +74,8 @@ let generating = false;
 let ready = false;
 /* A question typed while the model was still loading, to send once it is. */
 let queued = false;
+/* The "still loading" notice, removed once the model can answer. */
+let loadingNote = null;
 /* interruptGenerate() only sets a flag inside WebLLM: the stream then ends
    normally rather than rejecting, so a stop is indistinguishable from a finished
    answer unless we record it ourselves. */
@@ -239,16 +241,18 @@ function streamInto(body) {
   };
 }
 
-/* Conversation survives a reload. Kept on this device only; nothing is uploaded. */
+/* Conversation survives a reload and moving between pages, and is gone once the
+   tab is closed. sessionStorage rather than localStorage, so nothing about a
+   visitor's questions outlives their visit. */
 const STORE_KEY = "chat-turns-v1";
 function saveTurns() {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify(turns.slice(-20)));
+    sessionStorage.setItem(STORE_KEY, JSON.stringify(turns.slice(-20)));
   } catch (e) { /* private mode or full quota: the chat still works, just not across reloads */ }
 }
 function loadTurns() {
   try {
-    const raw = localStorage.getItem(STORE_KEY);
+    const raw = sessionStorage.getItem(STORE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     if (Array.isArray(parsed)) {
       return parsed.filter((t) => t && typeof t.content === "string"
@@ -316,8 +320,13 @@ async function boot() {
   /* Reveal the conversation immediately so the download is not dead time: the
      visitor can type now and the question fires the moment the model is ready. */
   chat.hidden = false;
+  chat.classList.add("is-loading");
+  sendBtn.textContent = "Queue";
   input.disabled = false;
-  input.placeholder = "Type your question now, it will answer once the model is ready…";
+  input.placeholder = "Type your question now, it will send as soon as the model is ready…";
+  loadingNote = addMessage("assistant",
+    "Loading the model onto your GPU. Nothing is sent to a server. "
+    + "You can type your question now and it will send by itself once this finishes.");
   input.focus();
 
   /* Cache API storage is best-effort by default, so a browser under disk
@@ -334,14 +343,26 @@ async function boot() {
      network rather than a bad model, and eight silent load attempts is a long
      wait with a progress bar stuck at zero. */
   const models = pickModels().slice(0, 2);
-  const worker = new Worker(new URL("./chat-worker.js", import.meta.url), { type: "module" });
+  /* Prefer the service worker: it survives navigating away and back, so the
+     model does not have to be rebuilt every time the page is opened. Falls back
+     to a dedicated worker where service workers are unavailable (no secure
+     context, or the registration is refused). */
+  let useServiceWorker = false;
+  try {
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      await navigator.serviceWorker.register(new URL("../sw.js", import.meta.url), { type: "module" });
+      await navigator.serviceWorker.ready;
+      useServiceWorker = true;
+    }
+  } catch (e) {
+    console.warn("service worker unavailable, using a dedicated worker", e);
+  }
+  const worker = useServiceWorker
+    ? null
+    : new Worker(new URL("./chat-worker.js", import.meta.url), { type: "module" });
+
   let modelId = null;
   let lastErr = null;
-
-  /* A model can be listed in prebuiltAppConfig yet be unloadable (missing or
-     newer-format weights on the CDN). Fall through to the next one instead of
-     handing the visitor a dead page. */
-  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   for (const candidate of models) {
    /* A mid-download CDN hiccup (rate limiting, a dropped connection) surfaces as
@@ -349,7 +370,7 @@ async function boot() {
       blip doesn't silently hand the visitor a weaker model for the whole visit. */
    for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      engine = await webllm.CreateWebWorkerMLCEngine(worker, candidate, {
+      const opts = {
         initProgressCallback: (report) => {
           const pct = Math.max(0, Math.min(1, report.progress || 0));
           bar.style.width = (pct * 100).toFixed(1) + "%";
@@ -360,7 +381,10 @@ async function boot() {
             : mb ? `${mb[1]} MB downloaded · ${Math.round(pct * 100)}%`
                  : (report.text || "Preparing…").replace(/ It can take a while.*$/, "");
         },
-      });
+      };
+      engine = useServiceWorker
+        ? await webllm.CreateServiceWorkerMLCEngine(candidate, opts)
+        : await webllm.CreateWebWorkerMLCEngine(worker, candidate, opts);
       modelId = candidate;
       break;
     } catch (err) {
@@ -409,7 +433,14 @@ async function boot() {
   }
 
   loader.hidden = true;
+  chat.classList.remove("is-loading");
+  sendBtn.textContent = "Send";
+  if (loadingNote) { loadingNote.closest(".msg")?.remove(); loadingNote = null; }
   ready = true;
+  /* Tells the other pages it is worth keeping the worker warm. Without this they
+     would wake it (and re-parse the whole runtime) for visitors who never opened
+     the chat at all. */
+  try { sessionStorage.setItem("chat-engine-live", "1"); } catch (e) { /* private mode */ }
   setStatus(modelId.replace(/-MLC$/, "") + " · running locally");
   showRuntime(modelId);
   input.placeholder = "Ask about his experience, research, or skills…";
@@ -576,7 +607,7 @@ stopBtn.addEventListener("click", () => { stopped = true; engine?.interruptGener
 
 clearBtn.addEventListener("click", () => {
   turns = [];
-  try { localStorage.removeItem(STORE_KEY); } catch (e) { /* nothing to remove */ }
+  try { sessionStorage.removeItem(STORE_KEY); } catch (e) { /* nothing to remove */ }
   log.replaceChildren();
   addMessage("assistant", "Cleared. Ask me anything about Reza's background.");
   chips.hidden = false;
