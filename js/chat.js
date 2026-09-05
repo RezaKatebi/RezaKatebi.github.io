@@ -352,55 +352,64 @@ async function boot() {
     if ("serviceWorker" in navigator && window.isSecureContext) {
       await navigator.serviceWorker.register(new URL("../sw.js", import.meta.url), { type: "module" });
       await navigator.serviceWorker.ready;
-      useServiceWorker = true;
+      /* Registered and activated is not the same as controlling this page. On a
+         first visit the page is uncontrolled until the worker claims it, and
+         WebLLM throws "There is no active service worker" if it posts before
+         then. Wait for the claim, but do not hang if it never arrives. */
+      if (!navigator.serviceWorker.controller) {
+        await new Promise((resolve) => {
+          const done = () => resolve();
+          navigator.serviceWorker.addEventListener("controllerchange", done, { once: true });
+          setTimeout(done, 4000);
+        });
+      }
+      useServiceWorker = !!navigator.serviceWorker.controller;
     }
   } catch (e) {
     console.warn("service worker unavailable, using a dedicated worker", e);
   }
-  const worker = useServiceWorker
-    ? null
-    : new Worker(new URL("./chat-worker.js", import.meta.url), { type: "module" });
+
+  /* The dedicated worker is only built if it is actually needed. */
+  let dedicated = null;
+  const getDedicated = () => (dedicated ||=
+    new Worker(new URL("./chat-worker.js", import.meta.url), { type: "module" }));
 
   let modelId = null;
   let lastErr = null;
 
+  /* Two models, and for each of them the service worker then a dedicated worker.
+     That covers a transient CDN failure and a service worker that cannot serve
+     this visitor, without turning a dead network into eight silent attempts. */
+  const transports = useServiceWorker ? ["service worker", "worker"] : ["worker"];
+
   for (const candidate of models) {
-   /* A mid-download CDN hiccup (rate limiting, a dropped connection) surfaces as
-      a generic cache error. Retry the same model once before falling back, so a
-      blip doesn't silently hand the visitor a weaker model for the whole visit. */
-   for (let attempt = 0; attempt < 2; attempt++) {
-    try {
-      const opts = {
-        initProgressCallback: (report) => {
-          const pct = Math.max(0, Math.min(1, report.progress || 0));
-          bar.style.width = (pct * 100).toFixed(1) + "%";
-          bar.parentElement.setAttribute("aria-valuenow", Math.round(pct * 100));
-          const mb = /(\d+)MB/.exec(report.text || "");
-          loaderMsg.textContent = report.text?.includes("Loading model from cache")
-            ? "Loading from cache…"
-            : mb ? `${mb[1]} MB downloaded · ${Math.round(pct * 100)}%`
-                 : (report.text || "Preparing…").replace(/ It can take a while.*$/, "");
-        },
-      };
-      engine = useServiceWorker
-        ? await webllm.CreateServiceWorkerMLCEngine(candidate, opts)
-        : await webllm.CreateWebWorkerMLCEngine(worker, candidate, opts);
-      modelId = candidate;
-      break;
-    } catch (err) {
-      lastErr = err;
-      bar.style.width = "0%";
-      if (attempt === 0) {
-        console.warn(`${candidate} failed to load, retrying once`, err);
-        loaderMsg.textContent = "Hit a snag fetching the weights, retrying…";
-        await sleep(1500);
-      } else {
-          console.warn(`${candidate} failed twice, trying the next model`, err);
-        loaderMsg.textContent = "That model would not load, trying a smaller one…";
+    for (const transport of transports) {
+      try {
+        const opts = {
+          initProgressCallback: (report) => {
+            const pct = Math.max(0, Math.min(1, report.progress || 0));
+            bar.style.width = (pct * 100).toFixed(1) + "%";
+            bar.parentElement.setAttribute("aria-valuenow", Math.round(pct * 100));
+            const mb = /(\d+)MB/.exec(report.text || "");
+            loaderMsg.textContent = report.text?.includes("Loading model from cache")
+              ? "Loading from cache…"
+              : mb ? `${mb[1]} MB downloaded · ${Math.round(pct * 100)}%`
+                   : (report.text || "Preparing…").replace(/ It can take a while.*$/, "");
+          },
+        };
+        engine = transport === "service worker"
+          ? await webllm.CreateServiceWorkerMLCEngine(candidate, opts)
+          : await webllm.CreateWebWorkerMLCEngine(getDedicated(), candidate, opts);
+        modelId = candidate;
+        break;
+      } catch (err) {
+        lastErr = err;
+        bar.style.width = "0%";
+        console.warn(`${candidate} failed to load via ${transport}`, err);
+        loaderMsg.textContent = "Hit a snag fetching the weights, trying another way…";
       }
     }
-   }
-   if (modelId) break;
+    if (modelId) break;
   }
 
   if (!modelId) {
