@@ -68,6 +68,12 @@ function buildMessages() {
   return [{ role: "system", content: SYSTEM_PROMPT }, ...kept];
 }
 let generating = false;
+/* `engine` is assigned before warm-up runs, so it cannot gate submissions: a
+   question sent during warm-up would race the warm-up request. `ready` is only
+   true once the model can actually answer. */
+let ready = false;
+/* A question typed while the model was still loading, to send once it is. */
+let queued = false;
 /* interruptGenerate() only sets a flag inside WebLLM: the stream then ends
    normally rather than rejecting, so a stop is indistinguishable from a finished
    answer unless we record it ourselves. */
@@ -215,9 +221,9 @@ function nearBottom() {
    forces a reflow per token. Coalesce to one render per animation frame. */
 function streamInto(body) {
   let pending = null;
-  let queued = false;
+  let frameQueued = false;
   const flush = () => {
-    queued = false;
+    frameQueued = false;
     if (pending === null) return;
     const stick = nearBottom();
     body.replaceChildren(render(pending));
@@ -227,7 +233,7 @@ function streamInto(body) {
   return {
     update(text) {
       pending = text;
-      if (!queued) { queued = true; requestAnimationFrame(flush); }
+      if (!frameQueued) { frameQueued = true; requestAnimationFrame(flush); }
     },
     finish(text) { pending = text; flush(); },
   };
@@ -253,6 +259,11 @@ function loadTurns() {
 }
 
 function fail(title, detail, links = true) {
+  /* Nothing will ever send now, so stop the composer implying otherwise. */
+  ready = false;
+  queued = false;
+  input.disabled = true;
+  sendBtn.disabled = true;
   gate.hidden = false;
   loader.hidden = true;
   chat.hidden = true;
@@ -298,8 +309,6 @@ async function checkWebGPU() {
 
 /* ------------------------------------------------------------------ engine */
 
-let queued = false;   // a question typed before the model finished loading
-
 async function boot() {
   gate.hidden = true;
   loader.hidden = false;
@@ -321,7 +330,10 @@ async function boot() {
     }
   } catch (e) { /* not fatal; the model still caches, just evictably */ }
 
-  const models = pickModels();
+  /* Two candidates, one retry each. Beyond that the cause is almost always the
+     network rather than a bad model, and eight silent load attempts is a long
+     wait with a progress bar stuck at zero. */
+  const models = pickModels().slice(0, 2);
   const worker = new Worker(new URL("./chat-worker.js", import.meta.url), { type: "module" });
   let modelId = null;
   let lastErr = null;
@@ -359,7 +371,8 @@ async function boot() {
         loaderMsg.textContent = "Hit a snag fetching the weights, retrying…";
         await sleep(1500);
       } else {
-        console.warn(`${candidate} failed twice, trying the next model`, err);
+          console.warn(`${candidate} failed twice, trying the next model`, err);
+        loaderMsg.textContent = "That model would not load, trying a smaller one…";
       }
     }
    }
@@ -396,7 +409,7 @@ async function boot() {
   }
 
   loader.hidden = true;
-  chat.hidden = false;
+  ready = true;
   setStatus(modelId.replace(/-MLC$/, "") + " · running locally");
   showRuntime(modelId);
   input.placeholder = "Ask about his experience, research, or skills…";
@@ -406,7 +419,10 @@ async function boot() {
   /* Replay anything from a previous visit so the log matches what the model sees. */
   turns = loadTurns();
   if (turns.length) {
-    for (const t of turns) addMessage(t.role, t.content);
+    for (const t of turns) {
+      const el = addMessage(t.role, t.content);
+      if (t.role === "assistant") attachCopy(el.parentElement, () => t.content);
+    }
     clearBtn.hidden = false;
     log.scrollTop = log.scrollHeight;
   }
@@ -418,7 +434,7 @@ async function boot() {
 /* --------------------------------------------------------------- generation */
 
 async function ask(question) {
-  if (generating || !engine) return;
+  if (generating || !ready) return;
   generating = true;
   stopped = false;
   input.value = "";
@@ -430,16 +446,21 @@ async function ask(question) {
   addMessage("user", question);
 
   /* Refuse anything unrelated before spending a single token on it. The model is
-     small enough that it would answer confidently and wrongly. */
+     small enough that it would answer confidently and wrongly. Returning from
+     inside the try means the finally below still restores the controls. */
   const kind = classify(question);
   if (kind !== "on-topic") {
-    addMessage("assistant", REFUSALS[kind]);
-    chips.hidden = false;
-    setStatus(kind === "greeting" ? "Ready" : "Off topic, not sent to the model");
-    generating = false;
-    sendBtn.hidden = false;
-    stopBtn.hidden = true;
-    input.focus();
+    try {
+      addMessage("assistant", REFUSALS[kind]);
+      chips.hidden = false;
+      setStatus(kind === "greeting" ? "Ready" : "Off topic, not sent to the model");
+    } finally {
+      generating = false;
+      sendBtn.hidden = false;
+      stopBtn.hidden = true;
+      clearBtn.hidden = turns.length === 0;
+      input.focus();
+    }
     return;
   }
 
@@ -534,8 +555,8 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const q = input.value.trim();
   if (!q) return;
-  if (!engine) {
-    /* Still downloading. Keep the text in the box and send it on ready. */
+  if (!ready) {
+    /* Still downloading or warming up. Keep the text and send it when ready. */
     queued = true;
     setStatus("Queued. This will send as soon as the model finishes loading.");
     return;
