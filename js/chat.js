@@ -1,6 +1,6 @@
 /* Pinned: every behaviour below was verified against this exact build. */
 import * as webllm from "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.84/+esm";
-import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js?v=3b78f5b9";
+import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js?v=060ddfaf";
 
 /* Candidate models, newest first, resolved against whatever this build of WebLLM
    actually ships so a CDN version bump can't strand us on a dead id.
@@ -86,62 +86,6 @@ let loadingNote = null;
 let stopped = false;
 
 /* ---------------------------------------------------------------- helpers */
-
-const fmtBytes = (n) =>
-  n >= 1e9 ? (n / 1e9).toFixed(1) + " GB" : Math.round(n / 1e6) + " MB";
-
-/* Everything here is measured on the visitor's own machine; the point of the
-   panel is to make "this runs locally" checkable rather than just claimed. */
-async function showRuntime(modelId) {
-  const set = (id, text, good) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.textContent = text;
-    if (good) el.classList.add("good");
-  };
-
-  try {
-    const adapter = await navigator.gpu.requestAdapter();
-    const i = adapter?.info || {};
-    const name = [i.vendor, i.architecture].filter(Boolean).join(" ") || i.description || "WebGPU device";
-    set("rt-gpu", name, true);
-  } catch (e) { set("rt-gpu", "your GPU", true); }
-
-  const entry = (webllm.prebuiltAppConfig?.model_list ?? []).find((m) => m.model_id === modelId);
-  const vram = entry?.vram_required_MB ? ` · ${(entry.vram_required_MB / 1024).toFixed(1)} GB VRAM` : "";
-  set("rt-model", modelId.replace(/-q4f16_1-MLC$/, "").replace(/-MLC$/, "") + vram);
-
-  try {
-    const { usage } = await navigator.storage.estimate();
-    const persisted = await navigator.storage.persisted?.();
-    set("rt-cache", fmtBytes(usage || 0) + (persisted ? " cached, kept" : " cached"));
-  } catch (e) { set("rt-cache", "cached"); }
-
-  runtime.hidden = false;
-}
-
-function pickModels() {
-  const available = new Set(
-    (webllm.prebuiltAppConfig?.model_list ?? []).map((m) => m.model_id)
-  );
-  const usable = CANDIDATES.filter((id) => available.has(id));
-  return usable.length ? usable : [CANDIDATES[CANDIDATES.length - 1]];
-}
-
-/* Models emit markdown bold. Render it as real elements built from text nodes —
-   never innerHTML, so model output still cannot inject markup. */
-function inline(target, text) {
-  const re = /\*\*(.+?)\*\*/g;
-  let last = 0, m;
-  while ((m = re.exec(text)) !== null) {
-    if (m.index > last) target.appendChild(document.createTextNode(text.slice(last, m.index)));
-    const b = document.createElement("strong");
-    b.textContent = m[1];
-    target.appendChild(b);
-    last = re.lastIndex;
-  }
-  if (last < text.length) target.appendChild(document.createTextNode(text.slice(last)));
-}
 
 /* Models often inline bullets mid-paragraph ("initiatives: * A: ... * B: ..."),
    which would otherwise render as literal asterisks. A space-flanked asterisk is
@@ -389,6 +333,7 @@ async function boot() {
 
   let modelId = null;
   let lastErr = null;
+  const loadStart = performance.now();
 
   /* Two models, and for each of them the service worker then a dedicated worker.
      That covers a transient CDN failure and a service worker that cannot serve
@@ -404,9 +349,20 @@ async function boot() {
             bar.style.width = (pct * 100).toFixed(1) + "%";
             bar.parentElement.setAttribute("aria-valuenow", Math.round(pct * 100));
             const mb = /(\d+)MB/.exec(report.text || "");
+            /* Download speed is set by the link, not by anything we control:
+               WebLLM already fetches with four parallel streams, and measured
+               throughput plateaus there. So show the rate and a remaining
+               estimate rather than leaving a bar creeping for a minute. */
+            let detail = "";
+            if (mb && pct > 0.02) {
+              const secs = (performance.now() - loadStart) / 1000;
+              const rate = Number(mb[1]) / secs;
+              const left = Math.max(0, Math.round(secs / pct - secs));
+              detail = ` · ${rate.toFixed(1)} MB/s · about ${left}s left`;
+            }
             loaderMsg.textContent = report.text?.includes("Loading model from cache")
               ? "Loading from cache…"
-              : mb ? `${mb[1]} MB downloaded · ${Math.round(pct * 100)}%`
+              : mb ? `${mb[1]} MB downloaded · ${Math.round(pct * 100)}%${detail}`
                    : (report.text || "Preparing…").replace(/ It can take a while.*$/, "");
           },
         };
