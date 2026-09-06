@@ -16,6 +16,7 @@ Placeholders:
 
 Idempotent: run it as often as you like. Run it after editing partials/.
 """
+import hashlib
 import os
 import re
 import sys
@@ -33,6 +34,33 @@ PAGES = {
 
 BLOCKS = {"nav": "partials/nav.html", "footer": "partials/footer.html"}
 
+ASSETS = ["css/main.css", "js/app.js", "js/chat.js", "js/profile.js", "js/chat-worker.js"]
+
+
+def stamp():
+    """Short hash of the assets, so a deploy changes every asset URL.
+
+    GitHub Pages serves assets with max-age=600. Without a version in the URL a
+    visitor keeps running ten-minute-old JavaScript after a deploy, which looks
+    exactly like the fix not working. Hashing content means the URL only changes
+    when something actually changed.
+    """
+    h = hashlib.sha256()
+    for rel in ASSETS:
+        p = os.path.join(ROOT, rel)
+        if os.path.exists(p):
+            h.update(open(p, "rb").read())
+    return h.hexdigest()[:8]
+
+
+def version_assets(html, root, tag):
+    """Point every local css/js reference at ...?v=<hash>."""
+    def sub(m):
+        attr, path = m.group(1), m.group(2)
+        base = path.split("?")[0]
+        return f'{attr}="{base}?v={tag}"'
+    return re.sub(r'(href|src)="((?:\.\./)*(?:css|js)/[\w.-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?"', sub, html)
+
 
 def render(template, root, page):
     home = "" if page == "index.html" else root + "index.html"
@@ -41,7 +69,17 @@ def render(template, root, page):
 
 def main():
     check = "--check" in sys.argv
+    tag = stamp()
     changed = []
+
+    # chat.js imports profile.js directly, so that specifier needs the same
+    # treatment or a fresh chat.js can still pull a stale profile.
+    chat = os.path.join(ROOT, "js/chat.js")
+    src = open(chat).read()
+    new_src = re.sub(r'from "\./profile\.js(?:\?v=[0-9a-f]+)?"', f'from "./profile.js?v={tag}"', src)
+    if new_src != src and not check:
+        open(chat, "w").write(new_src)
+        tag = stamp()   # chat.js changed, so the hash moves
     for page, root in PAGES.items():
         path = os.path.join(ROOT, page)
         html = open(path).read()
@@ -55,6 +93,7 @@ def main():
             if not pattern.search(html):
                 sys.exit(f"error: {page} is missing the BUILD:{name} markers")
             html = pattern.sub(lambda m: m.group(1) + body + m.group(2), html)
+        html = version_assets(html, root, tag)
         if html != original:
             changed.append(page)
             if not check:

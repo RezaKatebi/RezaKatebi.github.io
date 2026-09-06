@@ -1,6 +1,6 @@
 /* Pinned: every behaviour below was verified against this exact build. */
 import * as webllm from "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.84/+esm";
-import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js";
+import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js?v=ff841194";
 
 /* Candidate models, newest first, resolved against whatever this build of WebLLM
    actually ships so a CDN version bump can't strand us on a dead id.
