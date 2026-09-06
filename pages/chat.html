@@ -12,9 +12,9 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap"></noscript>
-<link rel="stylesheet" href="../css/main.css?v=a83eb635">
+<link rel="stylesheet" href="../css/main.css?v=74f91166">
 <script>try{if(localStorage.getItem("theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
-<script src="../js/app.js?v=a83eb635" defer></script>
+<script src="../js/app.js?v=74f91166" defer></script>
 
 </head>
 <body>
@@ -22,7 +22,7 @@
 <!-- BUILD:nav -->
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="../index.html">Reza Katebi<span class="dot">.</span></a>
+    <a class="brand" href="../index.html">Reza Katebi</a>
     <button class="icon-btn nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -52,9 +52,9 @@
     <div id="gate" class="gate card">
       <div id="gate-body">
         <h2 style="font-size:1.25rem">One-time download, then it's local forever.</h2>
-        <p>The model weights are about <strong>400&nbsp;MB</strong>. They stream from a CDN once and are stored in your browser's cache, so every later visit starts instantly. It needs a browser with WebGPU and about 1.6&nbsp;GB of GPU memory. Integrated graphics are fine; phones are the awkward case, since they have to fetch and hold the same weights.</p>
+        <p>The model weights are about <strong>1.06&nbsp;GB</strong>. They stream from a CDN once and are stored in your browser's cache, so every later visit starts instantly. It needs a browser with WebGPU and about 2.2&nbsp;GB of GPU memory. On a machine that cannot manage that it falls back to a smaller model automatically. Integrated graphics are fine; phones are the awkward case, since they have to fetch and hold the same weights.</p>
         <div class="specs">
-          <div class="spec"><b>Qwen3.5 0.8B</b><span>4-bit quantized</span></div>
+          <div class="spec"><b>Qwen3.5 2B</b><span>4-bit quantized</span></div>
           <div class="spec"><b>WebGPU</b><span>your hardware</span></div>
           <div class="spec"><b>0 bytes</b><span>sent to any server</span></div>
         </div>
@@ -62,7 +62,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8z"/></svg>
           Load the model
         </button>
-        <p class="gate-note" id="gate-note">About 30 seconds on a fast connection, longer on a slow one. Instant every visit after that.</p>
+        <p class="gate-note" id="gate-note">Around a minute on a fast connection, longer on a slow one. Instant on every visit after that, and it stays loaded while you move around the site.</p>
       </div>
     </div>
 
@@ -105,7 +105,7 @@
     </p>
   </div>
 </main>
-<script type="module" src="../js/chat.js?v=a83eb635"></script>
+<script type="module" src="../js/chat.js?v=74f91166"></script>
 <!-- BUILD:footer -->
 <footer>
   <div class="wrap foot">

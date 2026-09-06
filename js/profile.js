@@ -5,52 +5,110 @@
 
 export const PROFILE = `
 # Reza Katebi, Ph.D.
-Senior Staff Machine Learning Engineer and Manager, GenAI (Bottlerocket) at Tesla. U.S. based.
+Senior Staff Machine Learning Engineer and Manager, GenAI (Bottlerocket), Tesla Inc.
+Work authorization: U.S. Citizen.
 Email rkatebi.gravity@gmail.com · linkedin.com/in/reza-katebi · github.com/RezaKatebi
+Google Scholar: scholar.google.com/citations?user=zvTWYeQAAAAJ
 
-## Now: Tesla, Senior Staff ML Engineer & Manager, GenAI (Apr 2024–present)
-Leads Tesla's GenAI transformation as head of the Bottlerocket team: a 25+ person org across the
-EU, US and China spanning distributed systems, SRE, backend, frontend and ML. Builds and runs
-Tesla's secure on-premises GenAI infrastructure and internal platforms.
-- Inference platform serving GenAI company-wide: 1.3B+ requests, 55x year-over-year growth.
-- Agentic platform carrying all of Tesla's GenAI traffic: thousands of agents in production,
-  document extraction across millions of documents, social media analytics.
-- Training/fine-tuning/serving on a GPU fleet across 3 datacenters, grown ~6x. Runs open-weight
-  models up to 3 trillion parameters at 1M-token context on Tesla's own hardware.
-- Built a gateway unifying commercial LLM providers and on-prem serving behind one API and token,
-  with per-token concurrency, spend governance and cost attribution.
-- Founded the document-intelligence product and wrote its analyzer service: a Kafka pipeline that
-  OCRs documents, routes them through vision and reasoning models, and validates extractions.
-- Owns LLM safety across the assistants: topic rails from real support corpora, off-topic
-  detection, multilingual refusal handling, and the customer-facing tool calls.
+## Summary
+Manages a 25+ person engineering organization that builds and runs Tesla's Generative AI
+infrastructure and platforms in-house: inference, agentic systems, training, and fine-tuning, all
+secure, on-premises, and used by teams company-wide. Applied R&D background before that, taking
+computer vision and deep learning from research concept to shipped product across manufacturing,
+robotics, remote sensing, and industrial IoT. Ph.D. astrophysicist by training.
 
-## Tesla, Senior ML Engineer, Vision R&D (Oct 2022–Apr 2024)
-Led CV/ML for critical projects across all Giga Factories.
-- Led ML and CV design of the automated quality inspection software deployed across all Giga
-  Factories, classifying defects by criticality.
-- Architected sub-millimeter surface crack detection for large cast bodies using multi-view
-  geometry, photometric stereo, laser profilometry and directional lighting.
-- Designed an alignment measurement product.
+## Technical skills
+- Generative AI: large language models, fine-tuning, RAG, agentic systems; GenAI platform design
+  and high-throughput inference infrastructure.
+- AI and ML: computer vision, machine and deep learning, model design in Python with PyTorch,
+  TensorFlow, Keras, OpenCV, scikit-learn, scikit-image, pandas, numpy, scipy. 11+ years.
+- Machine vision: multi-view geometry, structure from motion, photometric stereo, laser
+  profilometry, LIDAR and depth sensing, directional lighting, industrial GigE and RTSP cameras.
+- Infrastructure: Kubernetes, Ray, Slurm, Docker, Kafka, ClickHouse, Git, vLLM, and secure
+  on-premises GPU infrastructure.
+- LLM systems: multi-provider gateways, on-premises model serving, inference optimization, LLM
+  safety and guardrails, spend governance and cost attribution.
+- Deployment: model optimization and serving for on-premises, GPU-accelerated and edge computing.
+  7+ years.
+- Programming: Python, BASH, C/C++, LaTeX. Data cleaning, analysis, statistics and visualization
+  in Python and R, 12+ years.
 
-## Tesla, Senior Quality Inspection Engineer, ML/CV Tech Lead (Feb–Oct 2022)
-Automated quality inspection across the Giga Factories: hardware selection and control, CV/ML
+## Tesla: Senior Staff ML Engineer and Manager, GenAI (Bottlerocket), Apr 2024 to present
+Leads Tesla's global Generative AI transformation as head of the Bottlerocket team, managing a 25+
+person cross-functional organization across the EU, US and China: distributed systems engineers,
+SREs, backend engineers, frontend engineers and machine learning engineers. The team designs and
+delivers secure, on-premises GenAI infrastructure and internal platforms other teams build on,
+including systems that ultimately serve external customers.
+- High-throughput inference platform serving GenAI models company-wide: billions of requests,
+  1.3B+ served, 55x year-over-year growth in users.
+- Agentic platform carrying all of Tesla's GenAI traffic: thousands of agents in production, plus
+  document extraction across millions of documents, and social media analytics.
+- Built and scaled the GenAI infrastructure for training, fine-tuning and serving on a GPU fleet
+  across three datacenters, grown roughly 6x, under an operating model holding the platforms to
+  measurable reliability, scale and security bars.
+- Runs open-weight models up to 3 trillion parameters at 1M-token context on Tesla's own hardware,
+  which keeps sensitive workloads off third-party infrastructure.
+- Built a gateway unifying commercial LLM providers and on-premises serving behind one API and
+  token, with per-token concurrency, spend governance and cost attribution per organization.
+- Founded the document-intelligence product and wrote its analyzer service: a Kafka-driven pipeline
+  that preprocesses and OCRs documents, routes them through vision and reasoning models for
+  structured extraction, and validates the results.
+- Owns the LLM safety and behavior layer across the assistants: topic rails built from real support
+  corpora, off-topic detection, multilingual refusal handling, and the customer-facing tool calls.
+
+## Tesla: Senior Machine Learning Engineer, Vision R&D, Oct 2022 to Apr 2024
+Led R&D of computer vision and machine learning for highly visible, critical projects across all
+Giga Factories, with designs adopted by other internal teams and suppliers.
+- Led the ML and CV design of the automated quality inspection software deployed across all Giga
+  Factories, detecting and classifying defects by criticality.
+- Architected sub-millimeter surface crack detection for large cast bodies, exploiting surface
+  texture and its sensitivity to directionality through multi-view geometry, photometric stereo,
+  laser profilometry and directional lighting.
+- Designed an alignment measurement product leveraging machine learning and computer vision.
+
+## Tesla: Senior Quality Inspection Engineer, ML/CV Tech Lead, Feb 2022 to Oct 2022
+Led computer vision and machine learning for automating quality inspection of Tesla products across
+all Giga Factories in the Vision Automation Team: hardware selection and control, CV/ML
 architecture, and deployment on the manufacturing line.
 
-## Honeywell (Jan 2019–Feb 2022)
-Rose from Senior Data Scientist to Senior Advanced AI Engineer, leading teams shipping AI to market.
-- Gas leak and flame detection via Gas Cloud Imaging, physics and CV (Rebellion Photonics product).
-- Elevated skin temperature detection on a remote sensing device (PyTorch + OpenCV, press release).
-- Bioaerosol extraction and classification, concept to shipping SIoT product with Azure inference.
-- Mask-RCNN segmentation for a packet-picking warehouse robot, optimized for its edge compute;
-  point cloud perception for depth estimation and planning.
-- GAN and U-net image restoration on embedded devices in TensorFlow and TensorRT.
+## Honeywell: Senior Advanced Artificial Intelligence Engineer, Oct 2020 to Feb 2022
+Led a team of scientists and engineers building end-to-end deep learning pipelines for computer
+vision, physics-based AI and remote sensing, from concept validation to product launch against
+tracked KPIs.
+- Gas leak and flame detection using Gas Cloud Imaging (GCI), physics, computer vision and AI,
+  shipped as a Rebellion Photonics product.
+- Elevated human skin temperature detection on a remote sensing machine, PyTorch plus classical
+  OpenCV computer vision, covered in a public press release.
 
-## Physics research (astrophysics, 2008-2019)
-A decade of astrophysics research, from black hole theory through observation, before moving into AI.
+## Honeywell: Senior Advanced Data Scientist, Honeywell Robotics, Jun 2020 to Sep 2020
+Led deep learning and machine learning pipelines for computer vision and robotics vision, concept
+validation through product launch.
+- Designed the robot's point cloud perception for depth estimation and planning.
+- Optimized models for edge devices to cut inference time and cost.
+
+## Honeywell: Advanced Data Scientist, AI Engineering Focal in SIoT, Nov 2019 to Jun 2020
+Led end-to-end ML pipelines for warehouse inspection and computer vision across the SIoT division.
+Mentored junior data scientists, reported to senior executives, set software direction against KPIs.
+- Engineering focal for global SIoT projects, overseeing data science and giving technical
+  consultation across the division.
+- Took a pipeline extracting, masking and classifying bioaerosols from concept to a shipping
+  product: PyTorch and OpenCV on a SIoT device with Azure cloud inference, public press release.
+
+## Honeywell: Senior Data Scientist, Jan 2019 to Nov 2019
+Led end-to-end ML pipelines for industrial robotics, warehouse inspection, computer vision and
+SIoT, engaging customers in concept validation and pipeline design to sharpen KPIs and ROI.
+- Architected and deployed a Mask-RCNN semantic segmentation pipeline for a packet-picking robotic
+  arm for warehouse optimization, in TensorFlow, PyTorch and OpenCV, optimized for throughput on
+  the robot's edge compute unit.
+- Led ML pipelines on embedded devices for image enhancement and restoration using GANs and U-net
+  models for SIoT, in TensorFlow and TensorRT.
+
+## Physics research (astrophysics, 2008 to 2019)
+A decade of astrophysics research, from black hole theory through observation, before moving to AI.
 - Ph.D. thesis, "Nuclear outbursts in the centers of galaxies": the extreme variability of the
   supermassive black holes that power active galactic nuclei (AGN). Advisor Ryan Chornock.
-- Caught a Seyfert galaxy changing type. PS1-13cbe went from a Seyfert 2 to a Seyfert 1 in a matter
-  of months, one of very few such transitions observed as it happened. Published in MNRAS.
+- Caught a Seyfert galaxy changing type. PS1-13cbe went from a Seyfert 2 to a Seyfert 1 in months,
+  one of very few such transitions ever observed as it happened. Published in MNRAS.
 - Acquired and analysed gigabytes of data from the MDM, Swift and Magellan telescopes and from the
   PS1, SDSS and COSMOS sky surveys.
 - Numerical relativity for gravitational waves: simulated nearly extremal, highly spinning binary
@@ -60,34 +118,34 @@ A decade of astrophysics research, from black hole theory through observation, b
   capsule networks, published in MNRAS.
 
 ## Education
-- Ph.D. Physics, Ohio University (2014–2019), advisor Ryan Chornock. Thesis "Nuclear outbursts in
-  the centers of galaxies": variability in supermassive black holes powering AGN, including a
-  Seyfert galaxy caught rapidly transitioning between types. Data from MDM, Swift, Magellan; PS1,
-  SDSS, COSMOS surveys.
-- M.Sc. Physics, CSU Fullerton (2013–2014), GPA 3.9, advisor Geoffrey Lovelace. Numerical
-  simulation of highly spinning binary black holes for LIGO.
-- B.Sc. Physics, Yasuj University, Iran (2008–2011), GPA 3.8, magna cum laude.
+- Ph.D. Physics, Ohio University, Athens, Ohio, Sep 2014 to Oct 2019. Advisor Ryan Chornock.
+- M.Sc. Physics, California State University Fullerton, Aug 2013 to Aug 2014. GPA 3.9/4.0.
+  Advisor Geoffrey Lovelace.
+- B.Sc. Physics, Yasuj University, Iran, Sep 2008 to Jun 2011. GPA 3.8/4.0, magna cum laude.
+  Advisor Hossein Hendi.
 
-## Publications
-- Katebi et al. (2019), "Galaxy morphology prediction using capsule networks", MNRAS 486(2).
-- Katebi et al. (2019), "PS1-13cbe: The Rapid Transition of a Seyfert 2 to a Seyfert 1", MNRAS 487(3).
-- Numerical relativity with Chatziioannou, Lovelace, Boyle et al. on nearly extremal black holes.
-- Black hole thermodynamics, quasi-normal modes and Hawking radiation with Corda, Hendi, Schmidt
-  (2012-2017); quantum-dot optics with Khordad (2012). ~14 papers total.
-Press: Phys.org on the nuclear transient; Ohio University on the capsule-network result.
-Talks: 233rd AAS meeting (2019); PyData Atlanta and Atlanta Deep Learning (2018).
+## Publications, press and talks
+- Katebi, R., Zhou, Y., Chornock, R., Bunescu, R. (2019). "Galaxy morphology prediction using
+  capsule networks." MNRAS 486(2), 1539-1547.
+- Katebi, R., Chornock, R., Berger, E., Jones, D.O., Lunnan, R., Margutti, R., et al. (2019).
+  "PS1-13cbe: The Rapid Transition of a Seyfert 2 to a Seyfert 1." MNRAS 487(3), 4057-4070.
+- Numerical relativity with Chatziioannou, Lovelace, Boyle and others on measuring nearly extremal
+  black holes with gravitational waves, and on nearly extremal apparent horizons in merger
+  simulations (Classical and Quantum Gravity 32(6), 065007).
+- Black hole thermodynamics, quasi-normal modes and Hawking radiation with Corda, Hendi and Schmidt
+  (2012 to 2017); condensed-matter and quantum-dot optics papers with Khordad (2012).
+  Roughly 14 papers in total.
+- Press: Phys.org, "Rapid turn-on of a nuclear transient observed by astronomers." Ohio University
+  Arts and Sciences Forum on the capsule-network galaxy classification result.
+- Invited talks: 233rd American Astronomical Society meeting, Seattle 2019; Ohio University PandA
+  GradS Alumni Industry Night 2020; Atlanta Deep Learning and PyData Atlanta meetups on GANs,
+  capsule networks and deep learning for galaxy classification, 2018.
 
-## Skills
-Generative AI (LLMs, fine-tuning, RAG, agentic systems, inference infrastructure, LLM safety and
-guardrails, multi-provider gateways, vLLM); AI/ML and computer vision in PyTorch, TensorFlow,
-Keras, OpenCV, scikit-learn (11+ yrs); machine vision (multi-view geometry, structure from motion,
-photometric stereo, laser profilometry, LIDAR, industrial cameras); infrastructure (Kubernetes,
-Ray, Slurm, Docker, Kafka, ClickHouse, on-prem GPU); edge and GPU deployment (7+ yrs);
-Python, BASH, C/C++, R.
-
-## Personal
-Interests: generative AI, AI infrastructure, deep learning, computer vision, HPC, distributed
-systems. Judo and Brazilian Jiu-jitsu; chess and piano. Writes essays on consciousness and attention.
+## Interests and personal
+Fields of interest: generative AI, AI infrastructure and platforms, machine and deep learning,
+computer vision, high performance computing, large-scale distributed systems.
+Judo and Brazilian Jiu-jitsu practitioner. Plays chess and piano. Writes occasional essays on
+consciousness and attention.
 `.trim();
 
 export const SYSTEM_PROMPT = `You are the assistant on Reza Katebi's personal website. You answer questions from visitors (recruiters, collaborators, engineers, and the curious) about Reza's background, experience, research, and skills.

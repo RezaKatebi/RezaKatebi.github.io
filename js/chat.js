@@ -1,6 +1,6 @@
 /* Pinned: every behaviour below was verified against this exact build. */
 import * as webllm from "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.84/+esm";
-import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js?v=ff841194";
+import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js?v=3b78f5b9";
 
 /* Candidate models, newest first, resolved against whatever this build of WebLLM
    actually ships so a CDN version bump can't strand us on a dead id.
@@ -16,7 +16,8 @@ import { SYSTEM_PROMPT, SUGGESTIONS, classify, REFUSALS } from "./profile.js?v=f
    into the output — so the reply still ARRIVES with a think block and
    stripThink() below has to remove it. Sizes are vram_required_MB. */
 const CANDIDATES = [
-  "Qwen3.5-0.8B-q4f16_1-MLC",          // 1629 MB — newest family
+  "Qwen3.5-2B-q4f16_1-MLC",            // 2245 MB — better answers, not flagged low-resource
+  "Qwen3.5-0.8B-q4f16_1-MLC",          // 1629 MB — fallback for weaker GPUs
   "Qwen3-1.7B-q4f16_1-MLC",            // 2037 MB — better answers, ~2x the wait
   "Qwen3-0.6B-q4f16_1-MLC",            // 1403 MB — fastest
   "Qwen2.5-1.5B-Instruct-q4f16_1-MLC", // 1630 MB
@@ -52,6 +53,9 @@ let turns = [];
    for good. Budget in characters (~4 per token) against the model's 4096 window. */
 const CTX_CHARS      = 4096 * 4;
 const RESERVE_CHARS  = 240 * 4 + 1200;   // room for max_tokens plus slack
+/* The full resume is about 2500 tokens and the window is 4096, so only a few
+   turns of history fit alongside it. buildMessages() drops the oldest turns
+   rather than letting WebLLM throw ContextWindowSizeExceededError. */
 
 function buildMessages() {
   const budget = CTX_CHARS - SYSTEM_PROMPT.length - RESERVE_CHARS;
