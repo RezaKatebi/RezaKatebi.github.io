@@ -175,6 +175,15 @@ function render(text) {
 const THINK = /<think>[\s\S]*?(?:<\/think>|$)/g;
 const stripThink = (t) => t.replace(THINK, "");
 
+/* The prompt gives the model a refusal sentence to use for off-topic questions.
+   A small model sometimes appends it to a perfectly good answer, so drop it when
+   there is real content in front of it. A bare refusal is left alone. */
+const REFUSAL_TAIL = /\s*I only answer questions about Reza['\u2019]?s background and work\.?\s*$/i;
+function stripRefusalTail(t) {
+  const out = t.replace(REFUSAL_TAIL, "").trim();
+  return out.length > 20 ? out : t;
+}
+
 /* Small models keep opening with a citation of their own context. */
 const PREAMBLE = /^\s*(?:based on|according to|from|per)\s+(?:the\s+)?(?:provided\s+)?(?:profile|information|context|details|background)[^,.:;]*[,.:;]\s*/i;
 function stripPreamble(t) {
@@ -528,8 +537,8 @@ async function ask(question) {
          frequency penalty is here to break — the two go together. */
       temperature: 0.1,
       top_p: 0.9,
-      frequency_penalty: 0.4,
-      presence_penalty: 0.2,
+      frequency_penalty: 0.7,
+      presence_penalty: 0.4,
       max_tokens: 240,
       extra_body: { enable_thinking: false },
     });
@@ -558,7 +567,7 @@ async function ask(question) {
        text at all there is nothing worth remembering, so drop the user turn too:
        pushing an empty assistant message would leave a blank turn in every later
        request and desync what the model sees from what is on screen. */
-    const clean = stripPreamble(stripThink(answer).trim());
+    const clean = stripRefusalTail(stripPreamble(stripThink(answer).trim()));
     stream_.finish(clean || "");
     body.removeAttribute("aria-busy");
     if (clean) {
